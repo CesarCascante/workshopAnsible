@@ -13,6 +13,7 @@
       debug:
         msg: "Nombre: {{ item.nombre }} apellido:{{ item.apellido }}  Servidor: {{ result_comando.stdout }}"
       loop: "{{ usuarios }}"
+      when: ansible_os_family == "RedHat" 
 
     # - name: Llamar a un playbook
     #   ansible.builtin.include_tasks: holaplaybook.yml
