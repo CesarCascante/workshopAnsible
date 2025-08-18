@@ -1,0 +1,12 @@
+---
+- name: Plabook para demostracoin de codigo en CLI.
+  hosts: all
+  tasks:
+
+    - name: Obtener nombre de servidor.
+      ansible.builtin.shell: hostname
+      register: result_comando
+
+    - name: Imprimir en pantalla
+      debug:
+        var: "{{ result_comando }}"
