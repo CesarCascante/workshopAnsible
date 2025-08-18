@@ -1,7 +1,7 @@
 ---
 - name: Plabook para demostracoin de codigo en CLI.
   hosts: all
-  gather_facts: false
+  #gather_facts: false
   vars_files:
     - vars.yml
   vars: 
