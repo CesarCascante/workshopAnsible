@@ -1,0 +1,5 @@
+- name: Instalar un paquete
+  ansible.builtin.dnf:
+    name: httpd
+    state: latest
+
