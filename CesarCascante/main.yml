@@ -19,7 +19,7 @@
       debug:
         msg: "Nombre: {{ item.nombre }} apellido:{{ item.apellido }}  Servidor: {{ result_comando.stdout }}"
       loop: "{{ usuarios }}"
-      when: "'Aug' in result_comando.stdout"
+      when: "'ERROR' in result_comando.stdout"
 
 
     # - name: Llamar a un playbook
