@@ -18,7 +18,7 @@
       debug:
         msg: "Nombre: {{ item.nombre }} apellido:{{ item.apellido }}  Servidor: {{ result_comando.stdout }}"
       loop: "{{ usuarios }}"
-      when: sistema == "Linux" 
+      when: item.nombre == "Cesar"
 
     # - name: Llamar a un playbook
     #   ansible.builtin.include_tasks: holaplaybook.yml
