@@ -9,7 +9,7 @@
   tasks:
 
     - name: Obtener nombre de servidor.
-      ansible.builtin.shell: hostname
+      ansible.builtin.shell: date
       register: result_comando
       when: ansible_os_family == "RedHat"
 
@@ -20,9 +20,7 @@
         msg: "Nombre: {{ item.nombre }} apellido:{{ item.apellido }}  Servidor: {{ result_comando.stdout }}"
       loop: "{{ usuarios }}"
       when: 
-        - item.nombre == "Cesar" or item.nombre == "Otro"
-        - ansible_os_family == "RedHat"
-        - sistema == "Linux"
+        - result_comando.stdout is defined
 
 
     # - name: Llamar a un playbook
