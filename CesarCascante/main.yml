@@ -20,7 +20,7 @@
         msg: "Nombre: {{ item.nombre }} apellido:{{ item.apellido }}  Servidor: {{ result_comando.stdout }}"
       loop: "{{ usuarios }}"
       when: 
-        - result_comando.stdout is defined
+        - result_comando.msg is defined
 
 
     # - name: Llamar a un playbook
