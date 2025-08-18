@@ -9,7 +9,7 @@
 
     - name: Imprimir en pantalla
       debug:
-        msg: "{{ result_comando.stdout }}"
+        msg: "Nombre: {{ nombre }} apellido:{{ apellido }}  Servidor: {{ result_comando.stdout }}"
 
-    - name: Llamar a un playbook
-      ansible.builtin.include_tasks: holaplaybook.yml
+    # - name: Llamar a un playbook
+    #   ansible.builtin.include_tasks: holaplaybook.yml
