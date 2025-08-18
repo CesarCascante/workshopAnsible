@@ -9,4 +9,4 @@
 
     - name: Imprimir en pantalla
       debug:
-        var: "{{ result_comando }}"
+        msg: "{{ result_comando.stdout }}"
