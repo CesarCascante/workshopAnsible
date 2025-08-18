@@ -3,7 +3,7 @@
   hosts: all
   #gather_facts: false
   vars_files:
-    - vars.yml
+    - vars/vars.yml
   vars: 
     sistema: "Linux"
   tasks:
@@ -11,6 +11,15 @@
     - name: Obtener nombre de servidor.
       ansible.builtin.shell: date
       register: result_comando
+      when: ansible_os_family == "RedHat"
+
+    - name: Uso de template
+      ansible.builtin.template:
+        src: templates/reporte.csv.j2
+        dest: /tmp/reporte.csv
+        owner: root
+        group: root
+        mode: '0644'
       when: ansible_os_family == "RedHat"
 
     - name: Imprimir en pantalla
