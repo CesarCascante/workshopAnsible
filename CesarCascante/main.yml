@@ -1,6 +1,8 @@
 ---
 - name: Plabook para demostracoin de codigo en CLI.
   hosts: all
+  vars_files:
+    - vars.yml
   tasks:
 
     - name: Obtener nombre de servidor.
