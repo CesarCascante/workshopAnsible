@@ -1,2 +1,7 @@
-nombre: Cesar
+nombre: Cesar 
 apellido: Cascante
+usuarios:
+  - nombre: Cesar
+    apellido: Cascante
+  - nombre: Otro
+    apellido: Usuario
