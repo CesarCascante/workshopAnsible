@@ -11,6 +11,7 @@
     - name: Obtener nombre de servidor.
       ansible.builtin.shell: hostname
       register: result_comando
+      when: ansible_os_family == "RedHat"
 
     - name: Imprimir en pantalla
       vars: 
@@ -18,7 +19,7 @@
       debug:
         msg: "Nombre: {{ item.nombre }} apellido:{{ item.apellido }}  Servidor: {{ result_comando.stdout }}"
       loop: "{{ usuarios }}"
-      when: item.nombre == "Cesar"
+      when: item.nombre == "Cesar" and ansible_os_family == "RedHat"
 
     # - name: Llamar a un playbook
     #   ansible.builtin.include_tasks: holaplaybook.yml
