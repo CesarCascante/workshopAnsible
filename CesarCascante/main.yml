@@ -20,10 +20,10 @@
         msg: "Nombre: {{ item.nombre }} apellido:{{ item.apellido }}  Servidor: {{ result_comando.stdout }}"
       loop: "{{ usuarios }}"
       when: 
-        - item.nombre == "Cesar" 
+        - item.nombre == "Cesar" or item.nombre == "Otro"
         - ansible_os_family == "RedHat"
         - sistema == "Linux"
-        
+
 
     # - name: Llamar a un playbook
     #   ansible.builtin.include_tasks: holaplaybook.yml
