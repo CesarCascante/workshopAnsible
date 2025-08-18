@@ -13,6 +13,8 @@
       register: result_comando
 
     - name: Imprimir en pantalla
+      vars: 
+        sistema: "Windows"
       debug:
         msg: "Nombre: {{ item.nombre }} apellido:{{ item.apellido }}  Servidor: {{ result_comando.stdout }}"
       loop: "{{ usuarios }}"
