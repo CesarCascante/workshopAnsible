@@ -3,10 +3,10 @@
   hosts: all
   tasks: 
 
-    - name: bajar servicio httpd 
-      service: 
-        name: httpds
-        state: stopped
+    - name: instalar servicio httpd 
+      ansible.builtin.dnf:
+        name: mariadb
+        state: latest
       notify: Levantar servicio en caso de emergencia
 
   handlers:
