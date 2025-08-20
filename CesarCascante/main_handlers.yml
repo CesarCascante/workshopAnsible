@@ -5,7 +5,7 @@
 
     - name: bajar servicio httpd 
       service: 
-        name: httpd
+        name: httpds
         state: stopped
       notify: Levantar servicio en caso de emergencia
 
