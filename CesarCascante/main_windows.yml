@@ -3,8 +3,8 @@
   hosts: all
   tasks: 
 
-    - name: Bajar servicio AnyDesk.
+    - name: Bajar servicio Spooler.
       win_service:
-        name: AnyDesk
+        name: Spooler
         state: stopped
       when: ansible_os_family == "Windows"
