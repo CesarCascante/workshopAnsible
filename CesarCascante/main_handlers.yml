@@ -3,11 +3,15 @@
   hosts: all
   tasks: 
 
-    - name: instalar servicio httpd 
+    - name: instalar servicio mariadb 
       ansible.builtin.dnf:
-        name: mariadb
+        name: "{{ item }}"
         state: latest
       notify: Levantar servicio en caso de emergencia
+      when: ansible_os_family == "RedHat"
+      loop: 
+        - mariadb
+        - httpd
 
     - name: desinstalar servicio mariadb
       ansible.builtin.dnf:
