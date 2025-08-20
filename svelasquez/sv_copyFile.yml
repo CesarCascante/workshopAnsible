@@ -4,7 +4,7 @@
   tasks:
 
     - name: Imprimir variable ansible_os_family
-	    ansible.builtin.copy:
+      ansible.builtin.copy:
         src: archivo.txt
         dest: /tmp/archivo.txt
         owner: root
