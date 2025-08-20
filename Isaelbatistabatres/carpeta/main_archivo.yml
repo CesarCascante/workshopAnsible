@@ -1,0 +1,9 @@
+---
+- name: Playbook para trabajar con archivos
+  hosts: all
+  tasks: 
+
+    - name: copiar un archivo datos.txt a la ruta C:\temp\archivo.txt
+      ansible.windows.win_copy:
+        src: datos.txt
+        dest: C:\temp\archivo.txt
