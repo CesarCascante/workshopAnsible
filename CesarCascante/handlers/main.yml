@@ -1,0 +1,4 @@
+- name: Levantar servicio en caso de emergencia
+  service:
+    name: httpd
+    state: started

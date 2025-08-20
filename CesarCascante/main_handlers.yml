@@ -18,8 +18,8 @@
         name: mariadb
         state: absent
 
-  handlers:
-    - name: Levantar servicio en caso de emergencia
-      service:
-        name: httpd
-        state: started
+    - name: bajar ibmi
+      ibmi.ibmi_service:
+        name: QSYS/QZHBJOBD
+        state: stopped
+      when: ansible_os_family == "IBM"
