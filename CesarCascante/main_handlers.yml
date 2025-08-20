@@ -1,0 +1,16 @@
+---
+- name: Demo de handlers
+  hosts: all
+  tasks: 
+
+    - name: bajar servicio httpd 
+      service: 
+        name: httpd
+        state: stopped
+      notify: Levantar servicio en caso de emergencia
+
+  handlers:
+    - name: Levantar servicio en caso de emergencia
+      service:
+        name: httpd
+        state: started

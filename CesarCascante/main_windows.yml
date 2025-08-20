@@ -1,10 +1,19 @@
 ---
-- name: Playbook para windows
+- name: Playbook para conectarme con windows. 
   hosts: all
   tasks: 
 
-    - name: Bajar servicio Spooler.
-      win_service:
-        name: Spooler
+    - name: bajar servicio de Soopler
+      ansible.windows.win_service:
+        name: spooler
         state: stopped
-      when: ansible_os_family == "Windows"
+    
+    # - name: Reiniciar servidor. 
+    #   ansible.windows.win_reboot:
+    #     reboot_timeout: 600
+    #     test_command: whoami
+
+    - name: subir servicio de Soopler
+      ansible.windows.win_service:
+        name: spooler
+        state: started
