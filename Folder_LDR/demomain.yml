@@ -1,8 +1,8 @@
 ---
-- name: Playbook para hacer mi primer demo
+- name: Playbook para hacer el primer demo.
   hosts: all
-  tasks: 
-
+  tasks:
+  
     - name: Imprimir mensaje demo
       debug:
         msg: "Mensaje de la variable: {{ ansible_os_family }}"
