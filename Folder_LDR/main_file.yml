@@ -1,0 +1,12 @@
+---
+- name: Playbook para trabajar con archivos
+  hosts: all
+  tadks:
+
+    - name: Copia archivo datos en ruta /tmp
+      ansible.builtin.copy:
+        src: datos.txt
+        dest: /tmp/datos.txt
+        owner: root
+        group: root
+        mode: '0644'
