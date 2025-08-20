@@ -1,0 +1,8 @@
+---
+- name: Plabook para imprimir variable
+  hosts: caprhelserv02
+  tasks:
+
+    - name: Imprimir variable ansible_os_family
+      debug:
+        msg: "La familia del sistema operativo es: {{ ansible_os_family }}"
