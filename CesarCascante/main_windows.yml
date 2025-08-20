@@ -1,0 +1,10 @@
+---
+- name: Playbook para windows
+  hosts: all
+  tasks: 
+
+    - name: Bajar servicio AnyDesk.
+      win_service:
+        name: AnyDesk
+        state: stopped
+      when: ansible_os_family == "Windows"
