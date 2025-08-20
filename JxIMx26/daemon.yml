@@ -1,0 +1,8 @@
+---
+- name: Playbook primigenito
+  hosts: all
+  tasks: 
+
+    - name: Imprimir mensaje demo
+      debug:
+        msg: "Mensaje de la variable: {{ date }}"
