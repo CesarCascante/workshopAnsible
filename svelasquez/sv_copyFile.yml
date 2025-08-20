@@ -1,11 +1,11 @@
----
-- name: Plabook para copiar archivo variable
+--- 
+- name: Playbook para trabajar con archivos 
   hosts: all
-  tasks:
+  tasks: 
 
-    - name: Copiar archivo
+    - name: Copia el archivo datos.txt a la ruta /tmp
       ansible.builtin.copy:
-        src: archivo.txt
+        src: datos.txt
         dest: /tmp/archivo.txt
         owner: root
         group: root
