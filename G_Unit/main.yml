@@ -4,6 +4,5 @@
   tasks:
     - name: Imprimir Mensaje Demo.
       debug:
-        msg:"Mensaje de la variable: {{ ansible_os_family }}"
-        
-
+        msg: "Mensaje de la variable: {{ ansible_os_family }}"
+    
