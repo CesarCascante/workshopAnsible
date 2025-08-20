@@ -23,6 +23,9 @@
       when: ansible_os_family == "RedHat"
 
     - name: Imprimir en pantalla
+      become: true
+      become_user: adm_root
+      become_method: su 
       vars: 
         sistema: "Windows"
       debug:
