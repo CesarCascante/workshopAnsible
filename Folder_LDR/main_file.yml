@@ -1,7 +1,7 @@
 ---
 - name: Playbook para trabajar con archivos
   hosts: all
-  tadks:
+  tasks:
 
     - name: Copia archivo datos en ruta /tmp
       ansible.builtin.copy:
