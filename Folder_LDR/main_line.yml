@@ -3,8 +3,18 @@
   hosts: all
   tasks:
 
-    - name: Uso de linefile en grupo Linux
+    - name: Agregar encabezados
+      ansible.builtin.lineinfile:
+        path: /tmp/reporte_{{ ansible_date_time.date }}.csv
+        line: Servidor CPU Memoria
+        create: yes
+      delegate_to: caprhelserv03
+      run_once: yes
+
+    - name: Agregar información
       ansible.builtin.lineinfile:
         path: /tmp/reporte_{{ ansible_date_time.date }}.csv
         line: "{{ ansible_hostname }} {{ ansible_processor_count }} {{ ansible_memtotal_mb }}"
         create: yes
+      delegate_to: caprhelserv03
+  
