@@ -4,14 +4,14 @@
   tasks:
 
     - name: Crear encabezados
-      community.windows.win_lineinfile:
+      ansible.builtin.lineinfile:
         path: C:\Temp\Reporte_{{ ansible_date_time.date }}_v2.csv
         line: Servidor Cantidad de CPUs Cantidad de Memoria RAM
       delegate_to: capwinserv02
       run_once: yes
 
     - name: Reporte de Servidores en Grupo Windows
-      community.windows.win_lineinfile:
+      ansible.builtin.lineinfile:
         path: C:\Temp\Reporte_{{ ansible_date_time.date }}_v2.csv
         line: "{{ ansible_hostname }} {{ ansible_processor_count }} {{ ansible_memtotal_mb }}"
       delegate_to: capwinserv02
