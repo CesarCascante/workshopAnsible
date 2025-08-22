@@ -5,6 +5,6 @@
 
     - name: Uso de linefile en grupo Linux
       ansible.builtin.lineinfile:
-        path: "/tmp/reporte_{{ ansible_date_time.date }}.csv"
+        path: /tmp/reporte_{{ ansible_date_time.date }}.csv
         line: "{{ ansible_hostname }} {{ ansible_processor_count }} {{ ansible_memtotal_mb }}"
-        state: present
+        create: yes
