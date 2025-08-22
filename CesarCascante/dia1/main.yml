@@ -12,7 +12,7 @@
       ansible.builtin.shell: date
       register: result_comando
       when: ansible_os_family == "RedHat"
-      tag: 
+      tags: 
         - REDHAT
 
     - name: Uso de template
@@ -23,7 +23,7 @@
         group: root
         mode: '0644'
       when: ansible_os_family == "RedHat"
-      tag:
+      tags:
         - REDHAT
 
     - name: Imprimir en pantalla
@@ -33,6 +33,6 @@
         msg: "Nombre: {{ item.nombre }} apellido:{{ item.apellido }}  Servidor: {{ result_comando.stdout }}"
       loop: "{{ usuarios }}"
       when: "'ERROR' in result_comando.stdout"
-      tag:
+      tags:
         - IMPRIMIR
 
