@@ -15,6 +15,7 @@ en modo de lista poner cada uno de los requisitos que se requieren para que se g
 - Los instaladores deben estar en una ruta en los servidores remotos donde se va a realizar la instalacion, comprimidos en .tar.gz
 - La ruta anterior debe ser puesta como valor en el archivo de variables.yml en la variable llamada instaladores 
 - Se debe llenar el archivo hosts con las ips de los hosts donde se va a realizar la instalacion.
+- El instalador del antivirus debe de estar en la ruta \\DC01\instaladores\sophos.msi
  
 ## Ambiente
 
@@ -28,6 +29,7 @@ Se encuentra en ambiente de Panama Desarrollo
 nombre:  
 apellido: 
 usuarios:
+ruta_instalador:
  
 ## Autores
  
