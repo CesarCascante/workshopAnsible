@@ -1,0 +1,12 @@
+--- 
+- name: Playbook para trabajar con archivos 
+  hosts: all
+  tasks: 
+
+    - name: Copia el archivo datos.txt a la ruta /tmp
+      ansible.builtin.copy:
+        src: datos.txt
+        dest: /tmp/archivo.txt
+        owner: root
+        group: root
+        mode: '0644'

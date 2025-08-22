@@ -1,0 +1,11 @@
+---
+- name: Playbook para uso de template en jinja j2.
+  hosts: all
+  vars_files:
+    - vars/vars.yml
+  tasks:
+
+    - name: Mi archivo template de jinja j2
+      ansible.windows.win_template:
+        src: reporte.csv.j2
+        dest: C:\Temp\Reporte_{{ ansible_date_time.date }}_{{ ansible_hostname }}.csv

@@ -1,0 +1,20 @@
+---
+- name: Playbook que crea archivo /tmp para ejecutar en el grupo Linux
+  hosts: all
+  tasks:
+
+    - name: Agregar encabezados
+      ansible.builtin.lineinfile:
+        path: /tmp/reporte_{{ ansible_date_time.date }}.csv
+        line: Servidor CPU Memoria
+        create: yes
+      delegate_to: caprhelserv03
+      run_once: yes
+
+    - name: Agregar información
+      ansible.builtin.lineinfile:
+        path: /tmp/reporte_{{ ansible_date_time.date }}.csv
+        line: "{{ ansible_hostname }} {{ ansible_processor_count }} {{ ansible_memtotal_mb }}"
+        create: yes
+      delegate_to: caprhelserv03
+  
