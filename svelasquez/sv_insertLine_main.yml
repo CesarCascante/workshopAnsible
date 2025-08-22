@@ -13,7 +13,7 @@
 
     - name: Agregar linea al acrchivo
       ansible.builtin.lineinfile:
-        path: /tmp/V3_reporte_{{ ansible_date_time.date }}_v2.csv
+        path: /tmp/V3_reporte_{{ ansible_date_time.date }}.csv
         line: "{{ ansible_hostname }} {{ ansible_processor_vcpus }} {{ ansible_memtotal_mb }}"
         create: yes
       delegate_to: caprhelserv01
