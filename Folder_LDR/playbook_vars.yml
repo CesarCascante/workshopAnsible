@@ -1,0 +1,14 @@
+---
+- name: Playbook que utilice un template con datos en vars/vars.yml
+  hosts: all
+  vars_files:
+    - vars/vars.yml
+  tasks:
+
+    - name: Uso de template y vars.yml
+      ansible.builtin.template:
+        src: reporte.csv.j2
+        dest: "/tmp/Reporte" {{ansible_date_time.date}}_{{inventory_hostname}}
+        owner: root
+        group: root
+        mode: '0644'
