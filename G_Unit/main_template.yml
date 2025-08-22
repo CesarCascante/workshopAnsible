@@ -1,0 +1,14 @@
+---
+- name: main.template.yml
+  hosts: all
+  vars_files:
+  - vars/vars.yml
+  tasks:
+
+    - name: Copia archivo datos en ruta /tmp
+      ansible.builtin.template:
+        src: Despliegues/reporte.csv.j2
+        dest: /tmp/reporte_{{ ansible_date_time.date }}_{{ ansible_hostname }}.csv
+        owner: root
+        group: root
+        mode: '0644'
