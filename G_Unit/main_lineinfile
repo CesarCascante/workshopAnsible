@@ -8,3 +8,4 @@
       path: /tmp/reporte_srv_{{ ansible_date_time.date }}.csv
       line: "{{ ansible_hostname }} {{ ansible_processor_vcpus }} {{ ansible_memtotal_mb }}"
       create: yes
+    delegate_to: caprhelserv04
