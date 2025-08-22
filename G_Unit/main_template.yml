@@ -2,7 +2,7 @@
 - name: main.template.yml
   hosts: all
   vars_files:
-  - vars/vars.yml
+  - Vars/vars.yml
   tasks:
 
     - name: Copia archivo datos en ruta /tmp
