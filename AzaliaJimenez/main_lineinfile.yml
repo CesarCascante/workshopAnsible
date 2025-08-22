@@ -3,7 +3,15 @@
   hosts: all
   tasks:
 
-    - name: Busca los datos de los servidores para generar el reporte
+    - name: Crear encabezados
       community.windows.win_lineinfile:
-        path: C:\Temp\Reporte_{{ ansible_date_time.date }}.csv
+        path: C:\Temp\Reporte_{{ ansible_date_time.date }}_v2.csv
+        line: Servidor Cantidad de CPUs Cantidad de Memoria RAM
+      delegate_to: capwinserv02
+      run_once: yes
+
+    - name: Reporte de Servidores en Grupo Windows
+      community.windows.win_lineinfile:
+        path: C:\Temp\Reporte_{{ ansible_date_time.date }}_v2.csv
         line: "{{ ansible_hostname }} {{ ansible_processor_count }} {{ ansible_memtotal_mb }}"
+      delegate_to: capwinserv02
