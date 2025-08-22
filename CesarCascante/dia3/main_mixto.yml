@@ -1,8 +1,9 @@
 ---
 - name: Playbook para trabajar con archivos
   hosts: all
-  ansible_user: "{{ user_mailserver }}"
-  ansible_password: "{{ passwd_mailserver }}"
+  vars: 
+    - ansible_user: "{{ user_mailserver }}"
+    - ansible_password: "{{ passwd_mailserver }}"
   tasks:
 
     - name: Copiar el archivo datos.txt a la ruta C:\temp
