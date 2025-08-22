@@ -8,7 +8,7 @@
     - name: Uso de template y vars.yml
       ansible.builtin.template:
         src: reporte.csv.j2
-        dest: "/tmp/Reporte" {{ansible_date_time.date}}_{{inventory_hostname}}
+        dest: "/tmp/Reporte_{{ ansible_date_time.date }}_{{ inventory_hostname }}.csv"
         owner: root
         group: root
         mode: '0644'
