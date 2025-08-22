@@ -1,0 +1,10 @@
+---
+- name: Playbook Reporte de Grupo de Servidores Linix 
+  hosts: all
+  tasks: 
+
+    - name: Agregar linea al acrchivo
+      ansible.builtin.lineinfile:
+        path: /tmp/reporte_{{ ansible_date_time.date }}.csv
+        line: {{ ansible_hostname }} {{ ansible_processor_vcpus }} {{ ansible_memtotal_mb }} 
+        create: yes
