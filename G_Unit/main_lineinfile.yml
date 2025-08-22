@@ -1,0 +1,19 @@
+---
+- name: Playbook que cree un archivo en /tmp
+  hosts: all
+  tasks:
+  
+  - name: Crear encabezados
+    ansible.builtin.lineinfile:
+      path: /tmp/demo_reporte_srv_{{ ansible_date_time.date }}.csv
+      line: SERVER CPU RAM
+      create: yes
+    delegate_to: caprhelserv04
+    run_once: yes
+
+  - name: Crear informacion de los serviodres
+    ansible.builtin.lineinfile:
+      path: /tmp/demo_reporte_srv_{{ ansible_date_time.date }}.csv
+      line: "{{ ansible_hostname }} {{ ansible_processor_vcpus }} {{ ansible_memtotal_mb }}"
+      create: yes
+    delegate_to: caprhelserv04
