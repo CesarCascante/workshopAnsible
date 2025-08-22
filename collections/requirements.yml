@@ -1,1 +1,2 @@
-- name: community.windows
+collections:
+  - name: community.windows
