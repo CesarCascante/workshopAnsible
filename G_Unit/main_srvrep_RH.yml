@@ -1,0 +1,27 @@
+---
+- name: Verificar servicio en servidores Linux
+  hosts: all
+  gather_facts: no
+  tasks:
+
+    - name: Obtener nombre del servidor
+      command: hostname
+      register: hostname_output
+
+    - name: Verificar si el servicio httpd existe
+      shell: systemctl status httpd
+      register: httpd_status
+      ignore_errors: yes
+    - name: Guardar resultado en variable
+      set_fact:
+        servicio_resultado: "{{ 'Existe' if httpd_status.rc == 0 else 'No existe' }}"
+
+    - name: Crear template local con los datos
+      delegate_to: localhost
+      template:
+        src: Despliegue/linux_template.j2
+        dest: "/tmp/linux_{{ hostname_output.stdout }}.txt"
+
+    - name: Imprimir resultado
+      debug:
+        msg: "Servidor: {{ hostname_output.stdout }} - Servicio: {{ servicio_resultado }}"
