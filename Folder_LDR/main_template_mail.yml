@@ -14,12 +14,12 @@
    
     - name: Modulo de envío de correo
       mail:
-        host: "{{ mail_server }}"
-        port: "{{ port_server }}"
-        username: "{{ user_mailserver | default(omit) }}"
-        password: "{{ passwd_mailserver | default(omit) }}"
-        to: "{{ mail_to }}"
-        from: "{{ mail_from }}"
+        host: "{{ correo_servidor }}"
+        port: "{{ port_servidor }}"
+        username: "{{ user_mail }}"
+        password: "{{ passwd_mail }}"
+        to: "{{ correo_to }}"
+        from: "{{ correo_from }}"
         subject: "Ansible-Report"
         body: |
           Prueba de envío de información por mail. Fecha: {{ ansible_date_time.date }}.

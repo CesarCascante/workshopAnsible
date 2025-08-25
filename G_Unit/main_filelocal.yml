@@ -1,6 +1,6 @@
 ---
 - name: Generar CSV y enviar por correo
-  hosts: localhost
+  hosts: all
   tasks:
 
     - name: Generar archivo CSV desde plantilla
@@ -19,7 +19,7 @@
         subject: "Reporte de Servidores"
         body: |
           Hola,
-          Este es el reporte del dia  {{ansible_date_time.date }}
+          Este es el reporte del dia  {{ ansible_date_time.date }}
           Saludos
         attach:
           - "/tmp/mailrepo.csv"

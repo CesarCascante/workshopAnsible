@@ -17,6 +17,7 @@
         port: "{{ smtp_port }}"
         username: "{{ smtp_user }}"
         password: "{{ smtp_pass }}"
+        from: "{{ mail_from }}"
         to: "{{ correo_destino }}"
         subject: "{{ asunto }}"
         body: "{{ mensaje }}"
