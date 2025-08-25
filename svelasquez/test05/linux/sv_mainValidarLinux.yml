@@ -18,7 +18,6 @@
 
     - name: Definir variables para la plantilla
       set_fact:
-        nombre_servidor: "{{ resultado_hostname.stdout }}"
         estado_httpd: "Existe"
       delegate_to: caprhelserv02
       when: estado_servicio.status.Result == "success"
@@ -31,5 +30,5 @@
 
     - name: Mostrar contenido generado
       debug:
-        msg: "Servidr: {{ nombre_servidor }} - HTTPD: {{ estado_httpd }}"
+        msg: "Servidr: {{ esultado_hostname.stdout }} - HTTPD: {{ estado_httpd }}"
       delegate_to: caprhelserv02
