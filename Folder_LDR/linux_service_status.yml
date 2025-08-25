@@ -14,7 +14,7 @@
       ignore_errors: yes
     - name: Result
       set_fact:
-        servicio_resultado: "{{ 'Servicio Existe' if spooler_status.exists else 'Servicio No existe' }}"
+        servicio_resultado: "{{ 'Servicio Existe' if httpd_status.rc == 0 else 'Servicio No existe' }}"
 
 
     - name: Usar template local con los datos
@@ -25,4 +25,4 @@
 
     - name: Imprimir resultado
       debug:
-        msg: "Servidor: {{ hostname_output.stdout }} Validando Servicio: {{ servicio_resultado }}"
+        msg: "Servidor: {{ hostname_output.stdout }} Validando Servicio httpd: {{ servicio_resultado }}"
