@@ -10,7 +10,7 @@
         owner: root
         group: root
         mode: '0644'
-    delegate_to: localhost
+      delegate_to: localhost
    
     - name: Modulo de envío de correo
       mail:
@@ -25,6 +25,5 @@
           Prueba de envío de información por mail. Fecha: {{ ansible_date_time.date }}.
           Bye
         attach:
-          - /tmp/archivo.csv
-      failed_when: false
+         - /tmp/archivo.csv
       delegate_to: localhost
