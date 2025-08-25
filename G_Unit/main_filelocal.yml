@@ -1,6 +1,6 @@
 ---
 - name: Generar CSV y enviar por correo
-  hosts: localhost
+  hosts: all
   tasks:
 
     - name: Generar archivo CSV desde plantilla
