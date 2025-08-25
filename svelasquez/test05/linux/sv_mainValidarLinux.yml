@@ -1,0 +1,37 @@
+---
+- name: Obtener nombre del servidor y validar servicio httpd
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Obtener nombre del servidor
+      command: hostname
+      register: resultado_hostname
+      delegate_to: caprhelserv02
+
+    - name: Verificar si el servicio httpd existe
+      shell: systemctl status httpd
+      register: resultado_httpd
+      ignore_errors: yes
+      delegate_to: caprhelserv02
+
+    - name: Definir variables para la plantilla
+      set_fact:
+        nombre_servidor: "{{ resultado_hostname.stdout }}"
+        estado_httpd: >-
+          {% if resultado_httpd.rc == 0 %}
+            Existe
+          {% else %}
+            No existe o inactivo
+          {% endif %}
+      delegate_to: caprhelserv02
+
+    - name: Generar archivo CSV desde plantilla
+      template:
+        src: reporte.csv.j2
+        dest: /tmp/reporteNameServerAndService.csv
+      delegate_to: caprhelserv02
+
+    - name: Mostrar contenido generado
+      debug:
+        msg: "Servidr: {{ nombre_servidor }} - HTTPD: {{  estado_httpd }}"
+      delegate_to: caprhelserv02
