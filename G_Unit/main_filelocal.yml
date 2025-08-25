@@ -22,6 +22,6 @@
           Este es el reporte del dia  {{ ansible_date_time.date }}
           Saludos
         attach:
-          - "/tmp/mailrepo.csv"
+          - /tmp/mailrepo.csv
       failed_when: false
       delegate_to: localhost
