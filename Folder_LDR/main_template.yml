@@ -1,49 +1,14 @@
 ---
-- name: Playbook que utilice un template variables en vars/vars.yml
+- name: Playbook para uso de templates en jinja j2.
   hosts: all
   vars_files:
     - vars/vars.yml
-  tasks:
+  tasks: 
 
-    - name: Uso de template de jinja2
+    - name: Mi archivo template de jinja2.
       ansible.builtin.template:
         src: reporte.csv.j2
-        dest: "/tmp/archivo.csv"
+        dest: /tmp/Reporte_{{ ansible_date_time.date }}_{{ ansible_hostname }}.csv
         owner: root
         group: root
         mode: '0644'
-
-    - name: Sending an e-mail using Gmail SMTP servers
-      community.general.mail:
-      host: 127.0.0.1
-      port: 2025
-      host: smtp.gmail.com
-    port: 587
-    username: username@gmail.com
-    password: mysecret
-      subject: Ansible-report
-      body: "Enviando información: Fecha, Nombre_Servidor"
-      from: jane@example.net 
-      to:
-        - John Doe <j.d@example.org>
-        - Suzie Something <sue@example.com>
-      cc: Charlie Root <root@localhost>
-      attach:
-        - /etc/group
-        - /tmp/archivo.csv
-      headers:
-        - Reply-To=john@example.com
-        - X-Special="Something or other"
-      charset: us-ascii
-    delegate_to: localhost
-
-    - name: Sending an e-mail using Gmail SMTP servers
-  community.general.mail:
-    host: smtp.gmail.com
-    port: 587
-    username: username@gmail.com
-    password: mysecret
-    to: John Smith <john.smith@example.com>
-    subject: Ansible-report
-    body: System {{ ansible_hostname }} has been successfully provisioned.
-  delegate_to: localhost
