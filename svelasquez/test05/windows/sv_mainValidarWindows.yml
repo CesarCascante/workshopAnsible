@@ -19,7 +19,7 @@
     - name: Definir variables para la plantilla
       set_fact:
         estado_spooler: "Existe"
-      when: resultado_spooler.exists == "true"
+      when: estado_servicio.exists == "true"
       delegate_to: capwinserv01
 
     - name: Generar archivo CSV desde plantilla
