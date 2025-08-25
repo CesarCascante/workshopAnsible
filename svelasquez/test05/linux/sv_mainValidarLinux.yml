@@ -3,7 +3,7 @@
   hosts: all
   gather_facts: no
   vars: 
-    - estado_httpd = "No Existe"
+    - estado_httpd: "No Existe"
   tasks:
     - name: Obtener nombre del servidor
       command: hostname
