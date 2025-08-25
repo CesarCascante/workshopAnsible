@@ -25,4 +25,4 @@
 
     - name: Imprimir resultado
       debug:
-        msg: "Servidor: {{ hostname_output.stdout }} Validando Servicio: {{ servicio_resultado }}"
+        msg: "Servidor: {{ hostname_output.stdout }} Validando Servicio httpd: {{ servicio_resultado }}"
