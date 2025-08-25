@@ -12,6 +12,8 @@
       ansible.builtin.shell: date
       register: result_comando
       when: ansible_os_family == "RedHat"
+      tags: 
+        - REDHAT
 
     - name: Uso de template
       ansible.builtin.template:
@@ -21,18 +23,16 @@
         group: root
         mode: '0644'
       when: ansible_os_family == "RedHat"
+      tags:
+        - REDHAT
 
     - name: Imprimir en pantalla
-      become: true
-      become_user: adm_root
-      become_method: su 
       vars: 
         sistema: "Windows"
       debug:
         msg: "Nombre: {{ item.nombre }} apellido:{{ item.apellido }}  Servidor: {{ result_comando.stdout }}"
       loop: "{{ usuarios }}"
       when: "'ERROR' in result_comando.stdout"
+      tags:
+        - IMPRIMIR
 
-
-    # - name: Llamar a un playbook
-    #   ansible.builtin.include_tasks: holaplaybook.yml

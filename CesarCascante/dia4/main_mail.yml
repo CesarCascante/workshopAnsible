@@ -1,0 +1,29 @@
+---
+- name: Playbook para envio de correo.
+  hosts: all
+  tasks:
+
+    - name: Crear archivo reporte.csv con template
+      template:
+        src: reporte.csv.j2
+        dest: /tmp/reporte.csv
+      delegate_to: localhost
+    
+
+    - name: Envio de correo. 
+      mail:
+        host: "{{ mail_server }}"
+        port: "{{ port_server }}"
+        username: "{{ user_mailserver | default(omit) }}"
+        password: "{{ passwd_mailserver | default(omit) }}"
+        to: "{{ mail_to }}"
+        from: "{{ mail_from }}"
+        subject: "Reporte de servidores"
+        body: |
+          Hola,
+          Este es el reporte del dia {{ ansible_date_time.date }}.
+          Saludos.
+        attach:
+          - /tmp/reporte.csv
+      failed_when: false
+      delegate_to: localhost

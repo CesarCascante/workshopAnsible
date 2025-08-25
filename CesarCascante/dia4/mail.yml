@@ -1,0 +1,15 @@
+- name: Envio de correo. 
+  mail:
+    host: "{{ mail_server }}"
+    port: "{{ port_server }}"
+    username: "{{ user_mailserver | default(omit) }}"
+    password: "{{ passwd_mailserver | default(omit) }}"
+    to: "{{ mail_to }}"
+    from: "{{ mail_from }}"
+    subject: "Reporte de servidores"
+    body: |
+      Hola,
+      Este es el reporte del dia {{ ansible_date_time.date }}.
+      Saludos.
+  failed_when: false
+  delegate_to: localhost

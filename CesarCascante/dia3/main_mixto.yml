@@ -1,0 +1,28 @@
+---
+- name: Playbook para trabajar con archivos
+  hosts: all
+  vars: 
+    - ansible_user: "{{ user_mailserver }}"
+    - ansible_password: "{{ passwd_mailserver }}"
+  tasks:
+
+    - name: Copiar el archivo datos.txt a la ruta C:\temp
+      ansible.windows.win_copy:
+        src: datos.txt
+        dest: "C:\\temp\\archivo.txt"
+      when: ansible_os_family == "Windows"
+
+- name: Playbook para uso de templates en jinja j2.
+  hosts: all
+  vars_files:
+    - vars/vars.yml
+  tasks: 
+
+    - name: Mi archivo template de jinja2.
+      ansible.builtin.template:
+        src: reporte.csv.j2
+        dest: /tmp/Reporte_{{ ansible_date_time.date }}_{{ ansible_hostname }}.csv
+        owner: root
+        group: root
+        mode: '0644'
+      when: ansible_os_family == "RedHat"
