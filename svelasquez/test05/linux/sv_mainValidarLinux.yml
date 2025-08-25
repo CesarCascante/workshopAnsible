@@ -30,5 +30,5 @@
 
     - name: Mostrar contenido generado
       debug:
-        msg: "Servidr: {{ esultado_hostname.stdout }} - HTTPD: {{ estado_httpd }}"
+        msg: "Servidr: {{ resultado_hostname.stdout }} - HTTPD: {{ estado_httpd }}"
       delegate_to: caprhelserv02
