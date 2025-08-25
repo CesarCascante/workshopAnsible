@@ -8,21 +8,16 @@
       register: resultado_hostname
       delegate_to: caprhelserv02
 
-    - name: Verificar si el servicio httpd existe
-      shell: systemctl status httpd
-      register: resultado_httpd
-      ignore_errors: yes
+    - name: Start service httpd, if not started
+      ansible.builtin.service:
+      name: httpd
+      register: estado_servicio
       delegate_to: caprhelserv02
 
     - name: Definir variables para la plantilla
       set_fact:
         nombre_servidor: "{{ resultado_hostname.stdout }}"
-        estado_httpd: >-
-          {% if resultado_httpd.rc == 0 %}
-            Existe
-          {% else %}
-            No existe o inactivo
-          {% endif %}
+        estado_httpd: "{{ estado_servicio.exists }}"
       delegate_to: caprhelserv02
 
     - name: Generar archivo CSV desde plantilla
@@ -33,5 +28,5 @@
 
     - name: Mostrar contenido generado
       debug:
-        msg: "Servidr: {{ nombre_servidor }} - HTTPD: {{  estado_httpd }}"
+        msg: "Servidr: {{ nombre_servidor }} - HTTPD: {{ estado_httpd }}"
       delegate_to: caprhelserv02
