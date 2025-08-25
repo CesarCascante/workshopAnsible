@@ -2,6 +2,8 @@
 - name: Obtener nombre del servidor y validar servicio httpd
   hosts: all
   gather_facts: no
+  vars: 
+    - estado_httpd = "No Existe"
   tasks:
     - name: Obtener nombre del servidor
       command: hostname
@@ -17,8 +19,9 @@
     - name: Definir variables para la plantilla
       set_fact:
         nombre_servidor: "{{ resultado_hostname.stdout }}"
-        estado_httpd: "{{ estado_servicio.exists }}"
+        estado_httpd: "Existe"
       delegate_to: caprhelserv02
+      when: estado_servicio.status.Result == "success"
 
     - name: Generar archivo CSV desde plantilla
       template:
