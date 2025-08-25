@@ -21,7 +21,7 @@
     - name: Usar template local con los datos
       delegate_to: localhost
       template:
-        src: Despliegues/win_service_validate.j2
+        src: win_service_validate.j2
         dest: "/tmp/win_serbice_{{ hostname_output.stdout }}.txt"
 
     - name: Imprimir resultado
