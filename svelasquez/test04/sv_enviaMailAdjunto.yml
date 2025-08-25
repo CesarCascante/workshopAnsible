@@ -1,0 +1,26 @@
+---
+- name: Generar y enviar reporte CSV
+  hosts: all
+  vars_files:
+    - vars/vars.yml
+  tasks:
+  
+    - name: Generar archivo CSV desde plantilla
+      template:
+        src: reporte.csv.j2
+        dest: "{{ output_path }}"
+        delegate_to: localhost
+
+    - name: Enviar correo con archivo adjunto
+      mail:
+        host: "{{ smtp_host }}"
+        port: "{{ smtp_port }}"
+        username: "{{ smtp_user }}"
+        password: "{{ smtp_pass }}"
+        to: "{{ correo_destino }}"
+        subject: "{{ asunto }}"
+        body: "{{ mensaje }}"
+        attach:
+          - "{{ output_path }}"
+        delegate_to: localhost
+

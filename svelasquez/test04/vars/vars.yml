@@ -1,0 +1,8 @@
+output_path: "/tmp/reporte.csv"
+correo_destino: "destinatario@ejemplo.com"
+asunto: "Reporte de servidor"
+mensaje: "Adjunto encontrarás el reporte generado automáticamente {{ ansible_date_time.date }}"
+smtp_host: "{{ mail_server }}"
+smtp_port: "{{ port_server }}"
+smtp_user: "{{ user_mailserver | default(omit) }}"
+smtp_pass: "{{ passwd_mailserver | default(omit) }}"

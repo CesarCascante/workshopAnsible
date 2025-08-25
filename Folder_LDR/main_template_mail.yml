@@ -1,0 +1,30 @@
+---
+- name: Playbook que utilice un template variables en vars/vars.yml
+  hosts: all
+  tasks:
+
+    - name: Uso de template de jinja2
+      ansible.builtin.template:
+        src: reporte.csv.j2
+        dest: "/tmp/archivo.csv"
+        owner: root
+        group: root
+        mode: '0644'
+    delegate_to: localhost
+   
+    - name: Modulo de envío de correo
+      mail:
+        host: "{{ mail_server }}"
+        port: "{{ port_server }}"
+        username: "{{ user_mailserver | default(omit) }}"
+        password: "{{ passwd_mailserver | default(omit) }}"
+        to: "{{ mail_to }}"
+        from: "{{ mail_from }}"
+        subject: "Ansible-Report"
+        body: |
+          Prueba de envío de información por mail. Fecha: {{ ansible_date_time.date }}.
+          Bye
+        attach:
+          - /tmp/archivo.csv
+      failed_when: false
+      delegate_to: localhost
