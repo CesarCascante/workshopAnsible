@@ -9,7 +9,7 @@
       template:
         src: reporte.csv.j2
         dest: "{{ output_path }}"
-        delegate_to: localhost
+      delegate_to: localhost
 
     - name: Enviar correo con archivo adjunto
       mail:
@@ -17,10 +17,11 @@
         port: "{{ smtp_port }}"
         username: "{{ smtp_user }}"
         password: "{{ smtp_pass }}"
+        from: "{{ mail_from }}"
         to: "{{ correo_destino }}"
         subject: "{{ asunto }}"
         body: "{{ mensaje }}"
         attach:
           - "{{ output_path }}"
-        delegate_to: localhost
+      delegate_to: localhost
 
