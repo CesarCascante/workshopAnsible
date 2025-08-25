@@ -1,14 +1,14 @@
 ---
-- name: Playbook que utilice un template variables en vars/vars.yml
+- name: Playbook para uso de templates en jinja j2.
   hosts: all
   vars_files:
     - vars/vars.yml
-  tasks:
+  tasks: 
 
-    - name: Uso de template de jinja2
+    - name: Mi archivo template de jinja2.
       ansible.builtin.template:
         src: reporte.csv.j2
-        dest: "/tmp/Reporte_{{ ansible_date_time.date }}_{{ ansible_hostname }}.csv"
+        dest: /tmp/Reporte_{{ ansible_date_time.date }}_{{ ansible_hostname }}.csv
         owner: root
         group: root
         mode: '0644'
