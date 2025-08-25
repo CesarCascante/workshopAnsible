@@ -10,7 +10,7 @@
 
     - name: Start service httpd, if not started
       ansible.builtin.service:
-      name: httpd
+        name: httpd
       register: estado_servicio
       delegate_to: caprhelserv02
 
