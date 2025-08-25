@@ -16,6 +16,7 @@
         username: "{{ user_mailserver | default(omit) }}"
         password: "{{ passwd_mailserver | default(omit) }}"
         to: "{{ destinatarios }}"
+        from: "{{ mail_from }}"
         subject: "Reporte de Servidores"
         body: |
           Hola,
