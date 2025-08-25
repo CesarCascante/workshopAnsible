@@ -25,3 +25,7 @@
           - "{{ output_path }}"
       delegate_to: localhost
 
+    - name: Paso extra
+      debug:
+        msg: "Paso extra completado"
+
