@@ -1,0 +1,34 @@
+---
+- name: Obtener nombre del servidor y validar servicio spooler
+  hosts: all
+  gather_facts: no
+  vars: 
+    - estado_spooler: "No Existe"
+  tasks:
+    - name: Obtener nombre del servidor
+      win_command: hostname
+      register: resultado_hostname
+      delegate_to: capwinserv01
+
+    - name: Validar servico Spooler
+      ansible.windows.win_service:
+        name: spooler
+      register: estado_servicio
+      delegate_to: capwinserv01
+
+    - name: Definir variables para la plantilla
+      set_fact:
+        estado_spooler: "Existe"
+      when: resultado_spooler.exists == "true"
+      delegate_to: capwinserv01
+
+    - name: Generar archivo CSV desde plantilla
+      template:
+        src: reporte.csv.j2
+        dest: /tmp/reporteNameServerAndService.csv
+      delegate_to: capwinserv01
+
+    - name: Mostrar contenido generado
+      debug:
+        msg: "Servidr: {{ resultado_hostname.stdout }} - Spooler: {{ estado_spooler }}"
+      delegate_to: capwinserv01
