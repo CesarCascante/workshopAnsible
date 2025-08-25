@@ -21,7 +21,7 @@
     - name: Crear template local con los datos
       delegate_to: localhost
       template:
-        src: Despliegue/windows_template.j2
+        src: Despliegues/windows_template.j2
         dest: "/tmp/windows_{{ hostname_output.stdout }}.txt"
 
     - name: Imprimir resultado

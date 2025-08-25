@@ -19,7 +19,7 @@
     - name: Crear template local con los datos
       delegate_to: localhost
       template:
-        src: Despliegue/linux_template.j2
+        src: Despliegues/linux_template.j2
         dest: "/tmp/linux_{{ hostname_output.stdout }}.txt"
 
     - name: Imprimir resultado
