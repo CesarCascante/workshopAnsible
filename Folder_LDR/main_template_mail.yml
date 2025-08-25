@@ -16,8 +16,8 @@
       mail:
         host: "{{ correo_servidor }}"
         port: "{{ port_servidor }}"
-        username: "{{ user_mail }}"
-        password: "{{ passwd_mail }}"
+        username: "{{ user_mailserver }}"
+        password: "{{ passwd_mailserver }}"
         to: "{{ correo_to }}"
         from: "{{ correo_from }}"
         subject: "Ansible-Report"
