@@ -1,0 +1,27 @@
+---
+- name: Generar CSV y enviar por correo
+  hosts: localhost
+  tasks:
+
+    - name: Generar archivo CSV desde plantilla
+      template:
+        src: "Despliegues/reporte.csv.j2"
+        dest: /tmp/mailrepo.csv
+      delegate_to: localhost
+
+    - name: Enviar correo con archivo adjunto
+      mail:
+        host: "{{ mail_server }}"
+        port: "{{ port_server }}"
+        username: "{{ user_mailserver | default(omit) }}"
+        password: "{{ passwd_mailserver | default(omit) }}"
+        to: "{{ destinatarios }}"
+        subject: "Reporte de Servidores"
+        body: |
+          Hola,
+          Este es el reporte del dia  {{ansible_date_time.date }}
+          Saludos
+        attach:
+          - "/tmp/mailrepo.csv"
+      failed_when: false
+      delegate_to: localhost
