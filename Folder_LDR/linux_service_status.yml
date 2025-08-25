@@ -14,7 +14,7 @@
       ignore_errors: yes
     - name: Result
       set_fact:
-        servicio_resultado: "{{ 'Servicio Existe' if spooler_status.exists else 'Servicio No existe' }}"
+        servicio_resultado: "{{ 'Servicio Existe' if httpd_status.rc == 0 else 'Servicio No existe' }}"
 
 
     - name: Usar template local con los datos
