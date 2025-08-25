@@ -1,0 +1,29 @@
+---
+- name: Verificar servicio en servidores Windows
+  hosts: all
+  gather_facts: no
+  tasks:
+
+    - name: Obtener nombre del servidor
+      win_command: hostname
+      register: hostname_output
+
+    - name: Verificar si el servicio spooler existe
+      win_service:
+        name: spooler
+      register: spooler_status
+      ignore_errors: yes
+
+    - name: Guardar resultado en variable
+      set_fact:
+        servicio_resultado: "{{ 'Existe' if spooler_status.exists else 'No existe' }}"
+
+    - name: Crear template local con los datos
+      delegate_to: localhost
+      template:
+        src: Despliegues/windows_template.j2
+        dest: "/tmp/windows_{{ hostname_output.stdout }}.txt"
+
+    - name: Imprimir resultado
+      debug:
+        msg: "Servidor: {{ hostname_output.stdout }} - Servicio: {{ servicio_resultado }}"

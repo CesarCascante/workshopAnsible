@@ -1,0 +1,34 @@
+---
+- name: Obtener nombre del servidor y validar servicio httpd
+  hosts: all
+  gather_facts: no
+  vars: 
+    - estado_httpd: "No Existe"
+  tasks:
+    - name: Obtener nombre del servidor
+      command: hostname
+      register: resultado_hostname
+      delegate_to: caprhelserv02
+
+    - name: Start service httpd, if not started
+      ansible.builtin.service:
+        name: httpd
+      register: estado_servicio
+      delegate_to: caprhelserv02
+
+    - name: Definir variables para la plantilla
+      set_fact:
+        estado_httpd: "Existe"
+      delegate_to: caprhelserv02
+      when: estado_servicio.status.Result == "success"
+
+    - name: Generar archivo CSV desde plantilla
+      template:
+        src: reporte.csv.j2
+        dest: /tmp/reporteNameServerAndService.csv
+      delegate_to: caprhelserv02
+
+    - name: Mostrar contenido generado
+      debug:
+        msg: "Servidr: {{ resultado_hostname.stdout }} - HTTPD: {{ estado_httpd }}"
+      delegate_to: caprhelserv02
