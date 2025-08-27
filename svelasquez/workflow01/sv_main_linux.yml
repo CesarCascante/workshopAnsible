@@ -6,13 +6,13 @@
     - name: Install the latest version of Apache and MariaDB
       ansible.builtin.package:
       name:
-       - httpd
+        - httpd
       state: latest
 
     - name: Copia el archivo index.html a la ruta /var/www/
       ansible.builtin.copy:
         src: files/index.html
         dest: /var/www/index.html
-        owner: apache
-        group: apache
+        owner: root
+        group: root
         mode: '0644'
