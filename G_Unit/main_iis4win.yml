@@ -21,6 +21,7 @@
         dest: C:\inetpub\www\index.html
 
     - name: Enviar correo de confirmación
+      delegate_to: localhost
       community.general.mail:
         host: "{{ mail_server }}"
         port: "{{ port_server }}"
