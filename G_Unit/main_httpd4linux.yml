@@ -1,15 +1,8 @@
 ---
 - name: Instalar Apache HTTPD y enviar correo de aprobación
-  hosts: servidores_linux
-  become: yes
-  vars:
-    correo_destino: "aprobaciones@tudominio.com"
-    smtp_host: "smtp.tudominio.com"
-    smtp_port: 587
-    smtp_usuario: "usuario@tudominio.com"
-    smtp_contrasena: "tu_contraseña_segura"
-
+  hosts: all
   tasks:
+
     - name: Instalar Apache HTTPD
       ansible.builtin.yum:
         name: httpd
