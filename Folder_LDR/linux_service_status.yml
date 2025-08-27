@@ -1,0 +1,28 @@
+---
+- name: Validando servicio en servidores Linux - Status
+  hosts: all
+  gather_facts: no
+  tasks:
+
+    - name: Nombre del server
+      command: hostname
+      register: hostname_output
+
+    - name: Validar servicio
+      shell: systemctl status httpd
+      register: httpd_status
+      ignore_errors: yes
+    - name: Result
+      set_fact:
+        servicio_resultado: "{{ 'Servicio Existe' if httpd_status.rc == 0 else 'Servicio No existe' }}"
+
+
+    - name: Usar template local con los datos
+      delegate_to: localhost
+      template:
+        src: linux_service_validate.j2
+        dest: "/tmp/linux_{{ hostname_output.stdout }}.txt"
+
+    - name: Imprimir resultado
+      debug:
+        msg: "Servidor: {{ hostname_output.stdout }} Validando Servicio httpd: {{ servicio_resultado }}"

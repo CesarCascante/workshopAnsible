@@ -1,0 +1,165 @@
+usr_instancia_uno: FCISQL
+usr_instancia_uno_puerto: 1433
+query_sql: | 
+  set nocount on
+
+  create table #dbfileInfo(
+
+  FileType varchar(300),
+
+  BaseDeDatos varchar(300),
+
+  FileSize_GB decimal(9,2),
+
+  SpaceUsed_GB decimal(9,2),
+
+  MaxSize_GB varchar(300),
+
+  [%Disp_DB] decimal(9,1),
+
+  [%Disp_growDB] decimal(9,1)
+
+  )
+
+  declare @mySQL nvarchar(2000)
+
+  DECLARE @dbName varchar(MAX)
+
+  DECLARE @cur_DBName CURSOR
+
+  SET @cur_DBName = CURSOR FOR
+
+  select name from sys.databases
+
+  OPEN @cur_DBName
+
+  FETCH NEXT
+
+  FROM @cur_DBName INTO @dbName
+
+  WHILE @@FETCH_STATUS = 0
+
+  BEGIN
+
+  PRINT @dbName
+
+  if DATABASEPROPERTYEX(@dbName, 'status') = 'ONLINE'
+
+  begin
+
+  select @mySQL = 
+
+      '
+
+          use ' + @dbname + '
+
+          INSERT INTO #dbfileInfo
+
+      SELECT    
+
+      MAX( name)as name, 
+
+      dbname as filename, 
+
+      sum(FileSizeMB)/1024 as FileSizeMB ,
+
+      sum(SpaceUsedMB)/1024 as SpaceUsedMB,
+
+      CONVERT(decimal(12, 2), sum (MaxSizeMB)/1024 ) as MaxsizeMB,
+
+      (sum(FileSizeMB)-sum (SpaceUsedMB))*100/sum(FileSizeMB) as PorcDispDB,
+
+      CASE 
+
+        WHEN sum(MaxSizeMB) =0 THEN 0
+
+        ELSE (sum(MaxSizeMB)-sum (FileSizeMB)+sum (FreeSpaceMB))*100/sum(MaxSizeMB)
+
+        end 
+
+        as PorcDispGrowDB
+
+
+    FROM         
+
+    (
+
+      SELECT     
+  
+      CASE 
+
+        WHEN groupid =0 THEN ''Log''
+
+        ELSE ''Data''
+
+        end as name
+  
+      , DB.name as dbname
+
+      ,CONVERT(decimal(12, 2), ROUND(a.size / 128.000, 2)) AS FileSizeMB
+
+      ,CONVERT(decimal(12, 2), ROUND(FILEPROPERTY(a.name, ''SpaceUsed'') / 128.000, 2)) AS SpaceUsedMB
+
+      ,a.size/128.0 - CAST(FILEPROPERTY(a.name, ''SpaceUsed'') AS int)/128.0  AS FreeSpaceMB
+
+      , CASE 
+
+        WHEN maxsize =''-1'' THEN ''0''
+
+        ELSE CONVERT( decimal(12, 2), ROUND(maxsize / 128.000, 2) )
+
+        end AS MaxSizeMB
+
+      ,  groupid
+
+        FROM  sys.databases AS DB INNER JOIN
+
+              sys.master_files AS MF ON MF.database_id = DB.database_id INNER JOIN
+
+              dbo.sysfiles AS a ON MF.name collate SQL_Latin1_General_CP1_CI_AS = a.name collate SQL_Latin1_General_CP1_CI_AS
+
+        WHERE      
+
+        (a.name NOT IN (''master'', ''mastlog'', ''modeldev'', ''modellog'', ''MSDBData'', ''MSDBLog'', ''tempdev'', ''templog'',''perf_warehouse'',''Tmp_Audit'',''Tmp_Audit_log'',''perf_warehouse_log''    ))
+
+      ) AS vista
+
+    group by name,dbname
+
+
+      '
+
+      exec sp_executesql @mySQL
+
+  end
+
+  FETCH NEXT
+
+  FROM @cur_DBName INTO @dbName
+
+  END
+
+  CLOSE @cur_DBName
+
+  DEALLOCATE @cur_DBName
+
+  GO
+
+  select BaseDeDatos, '     ',
+
+  FileType, '     ',
+
+  [%Disp_DB] as [%Esp Disp en el Archivo],  '     ',
+
+  CASE WHEN [%Disp_GrowDB] =0 THEN 'Ilimitado...' ELSE 
+
+  CONVERT(CHAR(20),[%Disp_GrowDB]) end 
+
+  as [%Esp Disp para Crecer]
+  
+  from #dbfileInfo 
+
+  --where[%Disp_GrowDB]<=17
+
+  drop table #dbfileInfo
+  

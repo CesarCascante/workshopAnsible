@@ -1,0 +1,29 @@
+---
+- name: Validando servicio en servidores Windows - Status
+  hosts: all
+  gather_facts: no
+  tasks:
+
+    - name: Nombre del server
+      win_command: hostname
+      register: hostname_output
+
+    - name: Validar servicio
+      win_service:
+        name: spooler
+      register: spooler_status
+      ignore_errors: yes
+
+    - name: Result
+      set_fact:
+        servicio_resultado: "{{ 'Servicio Existe' if spooler_status.exists else 'Servicio No existe' }}"
+
+    - name: Usar template local con los datos
+      delegate_to: localhost
+      template:
+        src: win_service_validate.j2
+        dest: "/tmp/win_serbice_{{ hostname_output.stdout }}.txt"
+
+    - name: Imprimir resultado
+      debug:
+        msg: "Servidor: {{ hostname_output.stdout }} Validando Servicio spooler: {{ servicio_resultado }}"
