@@ -1,27 +1,26 @@
 ---
-- name: Verificar servicio en servidores Linux
-  hosts: all
-  gather_facts: no
+- name: Instalar Apache HTTPD y copiar index.html
+  hosts: servidores_linux
+  become: yes
+  vars:
+    ruta_web: /var/www/html/index.html
+
   tasks:
+    - name: Instalar Apache HTTPD
+      ansible.builtin.yum:
+        name: httpd
+        state: present
 
-    - name: Obtener nombre del servidor
-      command: hostname
-      register: hostname_output
+    - name: Iniciar y habilitar el servicio httpd
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: yes
 
-    - name: Verificar si el servicio httpd existe
-      shell: systemctl status httpd
-      register: httpd_status
-      ignore_errors: yes
-    - name: Guardar resultado en variable
-      set_fact:
-        servicio_resultado: "{{ 'Existe' if httpd_status.rc == 0 else 'No existe' }}"
-
-    - name: Crear template local con los datos
-      delegate_to: localhost
-      template:
-        src: Despliegues/Linux_template.j2
-        dest: "/tmp/linux_{{ hostname_output.stdout }}.txt"
-
-    - name: Imprimir resultado
-      debug:
-        msg: "Servidor: {{ hostname_output.stdout }} - Servicio: {{ servicio_resultado }}"
+    - name: Copiar archivo index.html al directorio web
+      ansible.builtin.copy:
+        src: files/index.html
+        dest: "{{ ruta_web }}"
+        owner: apache
+        group: apache
+        mode: '0644'

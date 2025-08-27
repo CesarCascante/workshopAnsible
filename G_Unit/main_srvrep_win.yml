@@ -25,5 +25,6 @@
         dest: "/tmp/windows_{{ hostname_output.stdout }}.txt"
 
     - name: Imprimir resultado
+      delegate_to: localhost
       debug:
         msg: "Servidor: {{ hostname_output.stdout }} - Servicio: {{ servicio_resultado }}"
