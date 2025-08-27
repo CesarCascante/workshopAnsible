@@ -19,13 +19,13 @@
         dest: C:\inetpub\www\index.html
 
     - name: Enviar correo con archivo adjunto
-        mail:
-          host: "smtp.office365.com"
-          port: "587"
-          username: "{{ user_mailserver | default(omit) }}"
-          password: "{{ passwd_mailserver | default(omit) }}"
-          from: "GSSO@GBM.NET"
-          to: "{{ correo_destino }}"
-          subject: "Solicitud de Aprobación del Workflow"
-          body: "{{ tower_workflow_job_id | default( tower_job_id )}}"
+      mail:
+        host: "smtp.office365.com"
+        port: "587"
+        username: "{{ user_mailserver | default(omit) }}"
+        password: "{{ passwd_mailserver | default(omit) }}"
+        from: "GSSO@GBM.NET"
+        to: "{{ correo_destino }}"
+        subject: "Solicitud de Aprobación del Workflow"
+        body: "{{ tower_workflow_job_id | default( tower_job_id )}}"
       delegate_to: localhost
