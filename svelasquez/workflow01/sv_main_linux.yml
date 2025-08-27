@@ -5,9 +5,8 @@
 
     - name: Install the latest version of Apache
       ansible.builtin.dnf:
-      name:
-        - httpd
-      state: latest
+        name: httpd
+        state: latest
 
     - name: Copia el archivo index.html a la ruta /var/www/
       ansible.builtin.copy:
