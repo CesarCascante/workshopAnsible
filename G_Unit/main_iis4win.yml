@@ -1,0 +1,34 @@
+---
+- name: Verificar e instalar IIS en Windows, copiar index.html y enviar confirmación
+  hosts: servidores_windows
+  gather_facts: no
+  tasks:
+
+    - name: Verificar si IIS está instalado
+      win_feature:
+        name: Web-Server
+        state: present
+      register: iis_result
+
+    - name: Crear carpeta C:\inetpub\www si no existe
+      win_file:
+        path: C:\inetpub\www
+        state: directory
+
+    - name: Copiar archivo index.html
+      win_copy:
+        src: files/index.html
+        dest: C:\inetpub\www\index.html
+
+    - name: Enviar correo de confirmación
+      mail:
+        host: "{{ mail_server }}"
+        port: "{{ port_server }}"
+        username: "{{ user_mailserver | default(omit) }}"
+        password: "{{ passwd_mailserver | default(omit) }}"
+        to: "{{ destinatarios }}"
+        from: "{{ mail_from }}"
+        subject: "Confirmación de instalación de IIS"
+        body: |
+          El flujo de instalación de IIS se ha completado correctamente.
+          ID del flujo: {{ tower_workflow_job_id | default(tower_job_id) }}

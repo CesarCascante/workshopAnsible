@@ -1,0 +1,35 @@
+---
+- name: Instalar Apache HTTPD y enviar correo de aprobación
+  hosts: servidores_linux
+  become: yes
+  vars:
+    correo_destino: "aprobaciones@tudominio.com"
+    smtp_host: "smtp.tudominio.com"
+    smtp_port: 587
+    smtp_usuario: "usuario@tudominio.com"
+    smtp_contrasena: "tu_contraseña_segura"
+
+  tasks:
+    - name: Instalar Apache HTTPD
+      ansible.builtin.yum:
+        name: httpd
+        state: present
+
+    - name: Iniciar y habilitar el servicio httpd
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: yes
+
+    - name: Enviar correo de aprobación
+      community.general.mail:
+        host: "{{ mail_server }}"
+        port: "{{ port_server }}"
+        username: "{{ user_mailserver | default(omit) }}"
+        password: "{{ passwd_mailserver | default(omit) }}"
+        to: "{{ destinatarios }}"
+        from: "{{ mail_from }}"
+        subject: "Aprobación de flujo Ansible - HTTPD instalado"
+        body: |
+          El servidor Apache HTTPD ha sido instalado y habilitado correctamente.
+          ID del flujo: {{ tower_workflow_job_id | default(tower_job_id) }}
