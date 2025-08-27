@@ -3,8 +3,8 @@
   hosts: all
   tasks:
 
-    - name: Install the latest version of Apache and MariaDB
-      ansible.builtin.package:
+    - name: Install the latest version of Apache
+      ansible.builtin.dnf:
       name:
         - httpd
       state: latest
