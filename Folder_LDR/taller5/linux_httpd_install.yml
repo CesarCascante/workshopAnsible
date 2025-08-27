@@ -1,0 +1,27 @@
+---
+- name: Install HTTPD using Ansible Playbook
+  hosts: All
+  become: true
+  
+  tasks:
+    - name: Install HTTPD package
+      package:
+        name: httpd
+        state: present
+    - name: Start HTTPD service
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+    - name: Modulo de envío de correo
+      mail:
+        host: "{{ correo_servidor }}"
+        port: "{{ port_servidor }}"
+        username: "{{ user_mailserver }}"
+        password: "{{ passwd_mailserver }}"
+        to: "{{ correo_to }}"
+        from: "{{ correo_from }}"
+        subject: "Install httpd"
+        body: |
+          Install HTTPD Fecha: {{ ansible_date_time.date }}.
+      delegate_to: localhost
