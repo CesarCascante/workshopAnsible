@@ -13,6 +13,13 @@
         name: httpd
         state: started
         enabled: yes
+    - name: Validar servicio
+      shell: systemctl status httpd
+      register: httpd_status
+      ignore_errors: yes
+    - name: Result
+      set_fact:
+        servicio_resultado: "{{ 'Servicio Existe' if httpd_status.rc == 0 else 'Servicio No existe' }}"
     - name: Modulo de envío de correo
       mail:
         host: "{{ correo_servidor }}"
@@ -23,5 +30,5 @@
         from: "{{ correo_from }}"
         subject: "Install httpd"
         body: |
-          Install HTTPD Fecha: {{ ansible_date_time.date }}.
+          Estado de HTTPD Fecha: {{ ansible_date_time.date }} - {{ servicio_resultado }}.
       delegate_to: localhost
