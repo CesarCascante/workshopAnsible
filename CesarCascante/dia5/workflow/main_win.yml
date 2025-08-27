@@ -1,6 +1,8 @@
 ---
 - name: Playbook para instalar IIS
   hosts: all
+  vars_files:
+    - vars/main.yml
   tasks:
 
     - name: Instalar IIS
@@ -27,8 +29,8 @@
         state: directory
 
     - name: Crear pagina personalizada de prueba IIS
-      ansible.windows.template:
-        src: templates\index.html.j2
+      ansible.windows.win_template:
+        src: templates/index.html.j2
         dest: C:\inetpub\wwwroot\index.html
 
     - name: Envio de correo para aprobacion
