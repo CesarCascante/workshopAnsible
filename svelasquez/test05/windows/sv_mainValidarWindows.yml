@@ -26,9 +26,9 @@
       template:
         src: reporte.csv.j2
         dest: /tmp/reporteNameServerAndService.csv
-      delegate_to: capwinserv01
+      delegate_to: localhost
 
     - name: Mostrar contenido generado
       debug:
         msg: "Servidr: {{ resultado_hostname.stdout }} - Spooler: {{ estado_spooler }}"
-      delegate_to: capwinserv01
+      delegate_to: localhost
