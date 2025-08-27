@@ -1,0 +1,48 @@
+---
+- name: Playbook para instalar IIS
+  hosts: all
+  tasks:
+
+    - name: Instalar IIS
+      ansible.windows.win_feature:
+        name: Web-Server
+        state: present
+        include_management_tools: true
+      register: iis_install
+
+    - name: Reinicio luego de instalar IIS
+      ansible.windows.win_reboot:
+        reboot_timeout: 600
+      when: iis_install.reboot_required | default(false)
+
+    - name: Esperar a que el servicio HTTP esté disponible
+      ansible.windows.win_wait_for:
+        port: 80
+        delay: 10
+        timeout: 120
+    
+    - name: Crear ruta de IIS.
+      ansible.windows.win_file:
+        path: C:\inetpub\wwwroot
+        state: directory
+
+    - name: Crear pagina personalizada de prueba IIS
+      ansible.windows.template:
+        src: templates\index.html.j2
+        dest: C:\inetpub\wwwroot\index.html
+
+    - name: Envio de correo para aprobacion
+      mail:
+        host: "{{ mail_server }}"
+        port: "{{ port_server }}"
+        username: "{{ user_mailserver | default(omit) }}"
+        password: "{{ passwd_mailserver | default(omit) }}"
+        to: "{{ mail_to }}"
+        from: "{{ mail_from }}"
+        subject: "Solicitud de aprobacion de flujo {{ tower_workflow_job_id | default( tower_job_id )}}"
+        body: |
+          Hola,
+          La instalacion en Windows fue exitosa, favor aprobar el flujo {{ tower_workflow_job_id | default( tower_job_id )}} para continuar con el flujo.
+          Saludos.
+      failed_when: false
+      delegate_to: localhost
