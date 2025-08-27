@@ -21,7 +21,7 @@
         dest: C:\inetpub\www\index.html
 
     - name: Enviar correo de confirmación
-      mail:
+      community.general.mail:
         host: "{{ mail_server }}"
         port: "{{ port_server }}"
         username: "{{ user_mailserver | default(omit) }}"
