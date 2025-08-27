@@ -24,6 +24,4 @@
         subject: "Copy index.html"
         body: |
           Copia html: {{ ansible_date_time.date }}.
-        attach:
-          - C:\inetpub\wwwroot\index.html
-       delegate_to: localhost
+     delegate_to: localhost
