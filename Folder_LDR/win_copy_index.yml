@@ -24,4 +24,4 @@
         subject: "Copy index.html"
         body: |
           Copia html: {{ ansible_date_time.date }}.
-     delegate_to: localhost
+      delegate_to: localhost
