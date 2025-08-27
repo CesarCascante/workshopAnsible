@@ -10,15 +10,16 @@
         state: present
       register: iis_result
 
-    - name: Crear carpeta C:\inetpub\www si no existe
+    - name: Crear carpeta C:\inetpub\wwwroot si no existe
       win_file:
-        path: C:\inetpub\www
+        path: C:\inetpub\wwwroot
         state: directory
 
-    - name: Copiar archivo index.html
+    - name: Copiar archivo index.html a C:\inetpub\wwwroot (sobrescribir si existe)
       win_copy:
         src: files/index.html
-        dest: C:\inetpub\www\index.html
+        dest: C:\inetpub\wwwroot\index.html
+        force: yes  # Sobrescribe el archivo si ya existe
 
     - name: Enviar correo de confirmación
       delegate_to: localhost
