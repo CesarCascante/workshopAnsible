@@ -1,6 +1,8 @@
 ---
 - name: Demo de sql report.
   hosts: all
+  vars_files:
+    - vars/vars.yml
   tasks: 
 
     - name: Ejecutar script en instancia uno para obtener valores.
