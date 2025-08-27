@@ -1,6 +1,6 @@
 ---
 - name: Verificar e instalar IIS en Windows, copiar index.html y enviar confirmación
-  hosts: servidores_windows
+  hosts: all
   gather_facts: no
   tasks:
 
