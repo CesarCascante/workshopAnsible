@@ -1,0 +1,21 @@
+---
+- name: Copy index.html to remote server
+  hosts: all
+  become: yes  # Use this if you need elevated privileges
+  tasks:
+    - name: Copy index.html to C:\inetpub\www\
+      ansible.builtin.copy:
+        src: C:\temp\index.html  # Path to the file on your local machine
+        dest: C:\inetpub\www\index.html  # Destination path on the remote server
+    - name: Modulo de envío de correo
+      mail:
+        host: "{{ correo_servidor }}"
+        port: "{{ port_servidor }}"
+        username: "{{ user_mailserver }}"
+        password: "{{ passwd_mailserver }}"
+        to: "{{ correo_to }}"
+        from: "{{ correo_from }}"
+        subject: "Copy index.html"
+        body: |
+          Copia html: {{ ansible_date_time.date }}.
+      delegate_to: localhost
