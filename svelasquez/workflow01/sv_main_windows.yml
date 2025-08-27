@@ -1,0 +1,31 @@
+---
+- name: Playbook para instalar httpd
+  hosts: all
+  tasks:
+
+    - name: Instalar Caracteristica de IIS en Windows
+      ansible.windows.win_feature:
+        name: Web-Server
+        state: presen
+
+    - name: Ensure the directory exists
+      ansible.windows.win_file:
+        path: C:\inetpub\www
+        state: directory
+
+    - name: Copia el archivo index.html a la ruta /var/www/
+      ansible.windows.win_copy:
+        src: files/index.html
+        dest: C:\inetpub\www\index.html
+
+    - name: Enviar correo con archivo adjunto
+        mail:
+          host: "smtp.office365.com"
+          port: "587"
+          username: "{{ user_mailserver | default(omit) }}"
+          password: "{{ passwd_mailserver | default(omit) }}"
+          from: "GSSO@GBM.NET"
+          to: "{{ correo_destino }}"
+          subject: "Solicitud de Aprobación del Workflow"
+          body: "{{ tower_workflow_job_id | default( tower_job_id )}}"
+      delegate_to: localhost
