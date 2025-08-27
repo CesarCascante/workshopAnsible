@@ -1,0 +1,36 @@
+---
+- name: Demo de sql report.
+  hosts: all
+  tasks: 
+
+    - name: Ejecutar script en instancia uno para obtener valores.
+      ansible.windows.win_shell: | 
+        Invoke-Sqlcmd -Query "{{ query_sql }}" -ServerInstance "{{ usr_instancia_uno }},{{ usr_instancia_uno_puerto }}"
+      register: resultado_special
+
+    - name: crear reporte sql. 
+      ansible.builtin.copy:
+        content: "{{ resultado_special.stdout }}"
+        dest: /tmp/reporte_sql_{{ ansible_date_time.date }}.txt
+        owner: root
+        group: root
+        mode: '0644'
+      delegate_to: localhost
+
+    - name: Envio de correo. 
+      mail:
+        host: "{{ mail_server }}"
+        port: "{{ port_server }}"
+        username: "{{ user_mailserver | default(omit) }}"
+        password: "{{ passwd_mailserver | default(omit) }}"
+        to: "{{ mail_to }}"
+        from: "{{ mail_from }}"
+        subject: "Reporte de servidores"
+        body: |
+          Hola,
+          Este es el reporte del dia {{ ansible_date_time.date }}.
+          Saludos.
+        attach:
+          - /tmp/reporte_sql_{{ ansible_date_time.date }}.txt
+      failed_when: false
+      delegate_to: localhost
