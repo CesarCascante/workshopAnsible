@@ -27,7 +27,7 @@
         state: directory
 
     - name: Crear pagina personalizada de prueba IIS
-      ansible.windows.template:
+      template:
         src: templates\index.html.j2
         dest: C:\inetpub\wwwroot\index.html
 
