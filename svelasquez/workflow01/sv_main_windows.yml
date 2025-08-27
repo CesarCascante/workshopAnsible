@@ -6,7 +6,7 @@
     - name: Instalar Caracteristica de IIS en Windows
       ansible.windows.win_feature:
         name: Web-Server
-        state: presen
+        state: present
 
     - name: Ensure the directory exists
       ansible.windows.win_file:
