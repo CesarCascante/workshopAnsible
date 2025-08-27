@@ -1,0 +1,32 @@
+---
+- name: Playbook para instalar IIS
+  hosts: all
+  tasks:
+
+    - name: Instalar IIS
+      ansible.windows.win_feature:
+        name: Web-Server
+        state: present
+        include_management_tools: true
+      register: iis_install
+
+    - name: Reinicio luego de instalar IIS
+      ansible.windows.win_reboot:
+        reboot_timeout: 600
+      when: iis_install.reboot_required | default(false)
+
+    - name: Esperar a que el servicio HTTP esté disponible
+      ansible.windows.win_wait_for:
+        port: 80
+        delay: 10
+        timeout: 120
+    
+    - name: Crear ruta de IIS.
+      ansible.windows.win_file:
+        path: C:\inetpub\wwwroot
+        state: directory
+
+    - name: Crear pagina personalizada de prueba IIS
+      ansible.windows.template:
+        src: templates\index.html.j2
+        dest: C:\inetpub\wwwroot\index.html
