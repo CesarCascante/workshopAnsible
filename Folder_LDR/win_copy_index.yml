@@ -1,9 +1,8 @@
 ---
 - name: Copy index.html to remote server
   hosts: all
-  become: yes  # Use this if you need elevated privileges
+
   tasks:
-   
     - name: Crear ruta de IIS.
       ansible.windows.win_file:
         path: C:\inetpub\wwwroot
