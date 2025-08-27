@@ -1,6 +1,8 @@
 ---
 - name: Playbook para instalar IIS
   hosts: all
+  vars_files:
+    - vars/main.yml
   tasks:
 
     - name: Instalar IIS
