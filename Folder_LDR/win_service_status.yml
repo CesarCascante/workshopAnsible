@@ -22,7 +22,7 @@
       delegate_to: localhost
       template:
         src: win_service_validate.j2
-        dest: "/tmp/win_serbice_{{ hostname_output.stdout }}.txt"
+        dest: "/tmp/win_service_{{ hostname_output.stdout }}.txt"
 
     - name: Imprimir resultado
       debug:
