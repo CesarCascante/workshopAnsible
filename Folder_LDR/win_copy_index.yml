@@ -3,12 +3,26 @@
   hosts: all
   #become: yes  # Use this if you need elevated privileges
   tasks:
+<<<<<<< HEAD
 
     - name: Copy index.html to C:\inetpub\www\
       ansible.builtin.copy:
         src: C:\temp\index.html  # Path to the file on your local machine
         dest: C:\inetpub\www\index.html  # Destination path on the remote server
 
+=======
+   
+    - name: Crear ruta de IIS.
+      ansible.windows.win_file:
+        path: C:\inetpub\wwwroot
+        state: directory
+
+    - name: Crear pagina personalizada de prueba IIS
+      ansible.windows.win_template:
+        src: index_template.j2
+        dest: C:\inetpub\wwwroot\index.html
+    
+>>>>>>> 31aa84e0c13f5f784287338f481bde608f463b70
     - name: Modulo de envío de correo
       mail:
         host: "{{ correo_servidor }}"
