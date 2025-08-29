@@ -2,8 +2,8 @@
 - name: llamado a role windows en codigo.
   hosts: Windows
   vars: 
-    - ansible_user: "{{ user_mailserver }}"
-    - ansible_password: "{{ passwd_mailserver }}"
+    - ansible_user: "{{ user_win_server }}"
+    - ansible_password: "{{ passwd_win_server }}"
   roles:
     - windows
 
