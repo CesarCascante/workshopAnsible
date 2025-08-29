@@ -1,0 +1,5 @@
+---
+- name: llamado a role windows en codigo.
+  hosts: all
+  roles:
+    - windows
