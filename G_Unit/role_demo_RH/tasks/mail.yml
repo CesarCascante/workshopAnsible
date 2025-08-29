@@ -1,0 +1,18 @@
+---
+- name: Instalar httpd
+  yum:
+    name: httpd
+    state: present
+
+- name: Habilitar y arrancar el servicio httpd
+  service:
+    name: httpd
+    state: started
+    enabled: true
+  notify: Reiniciar httpd
+
+- name: Copiar página web básica
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+    mode: '0644'

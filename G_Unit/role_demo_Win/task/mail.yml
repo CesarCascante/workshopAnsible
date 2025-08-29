@@ -1,0 +1,10 @@
+---
+- name: Crear directorio C:\demo
+  win_file:
+    path: C:\demo
+    state: directory
+
+- name: Copiar archivo de texto
+  win_copy:
+    src: mensaje.txt
+    dest: C:\demo\mensaje.txt
