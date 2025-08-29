@@ -1,0 +1,15 @@
+---
+- name: Llamado de rol Windows
+  hosts: Windows
+  roles:
+
+    - role_demo_Win
+  vars: 
+    - ansible_user: "{{ user_win_server }}"
+    - ansible_password: "{{ passwd_win_server }}"
+
+
+- name: Llamdo de rol REL
+  hosts: Linux
+  roles:
+    - role_demo_RH

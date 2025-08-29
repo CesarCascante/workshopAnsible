@@ -1,0 +1,2 @@
+Este archivo fue creado por Ansible en un entorno Windows.
+¡Automatización completada con éxito!
