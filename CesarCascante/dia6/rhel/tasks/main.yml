@@ -41,5 +41,5 @@
 - name: Instalar httpd
   ansible.builtin.dnf:
     name: httpd
-    state: absent
+    state: removed
   when: tipo_objetivo == "DESINSTALAR"
