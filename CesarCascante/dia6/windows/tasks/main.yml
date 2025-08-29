@@ -9,5 +9,5 @@
   ansible.windows.win_copy:
     src: files/demo.txt
     dest: C:\demo\demo.txt
-  when: result_create_directory.changed or result_create_directory.ok
+  when: result_create_directory.changed
   register: result_copy_file
