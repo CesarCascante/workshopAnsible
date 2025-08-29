@@ -8,3 +8,5 @@ collections:
   - name: ansible.windows
     source: https://galaxy.ansible.com
     
+  - name: banistmo.demo
+    source: https://172.31.235.80/api/galaxy/
