@@ -5,7 +5,7 @@
     - banistmo.demo.rhel
 
 - name: Llamado role windows
-  hosts: windows
+  hosts: Windows
   vars: 
     - ansible_user: "{{ user_win_server }}"
     - ansible_password: "{{ passwd_win_server }}"
