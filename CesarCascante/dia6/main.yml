@@ -1,5 +1,10 @@
 ---
 - name: llamado a role windows en codigo.
-  hosts: all
+  hosts: Windows
   roles:
     - windows
+
+- name: llamado a role rhel en codigo.
+  hosts: Linux
+  roles:
+    - rhel
