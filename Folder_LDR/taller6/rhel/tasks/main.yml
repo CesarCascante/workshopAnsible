@@ -1,0 +1,26 @@
+- name: Instalar httpd
+  ansible.builtin.dnf:
+    name: httpd
+    state: present
+  
+- name: Habilitar y iniciar servicio httpd
+  ansible.builtin.service:
+    name: httpd
+    state: started
+    enabled: yes
+  
+- name: Verificar que httpd este corriendo
+  ansible.builtin.service:
+    name: httpd
+  register: httpd_status
+
+- name: Mostrar estado del servicio httpd
+  ansible.builtin.debug:
+    msg: "Servicio httpd esta {{ httpd_status.status.ActiveState }}"
+  
+- name: Copiar archivo index.hmtl de template
+  ansible.builtin.template:
+    src: templates/template_index.html.j2
+    dest: /var/www/html/index.html
+  notify: Restart httpd
+  
