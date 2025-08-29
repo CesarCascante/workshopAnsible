@@ -1,0 +1,13 @@
+---
+- name: Crear directorio
+  ansible.windows.win_file:
+    path: C:\demo
+    state: directory
+  register: result_create_directory
+
+- name: Copiar archivo
+  ansible.windows.win_copy:
+    src: files/demo.txt
+    dest: C:\demo\demo.txt
+  when: result_create_directory.changed
+  register: result_copy_file

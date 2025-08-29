@@ -1,0 +1,46 @@
+- name: Instalar httpd
+  ansible.builtin.dnf:
+    name: httpd
+    state: present
+  when: tipo_objetivo == "INSTALAR"
+
+- name: Habilitar y iniciar servicio httpd
+  ansible.builtin.service:
+    name: httpd
+    state: started
+    enabled: yes
+  when: tipo_objetivo == "INSTALAR"
+
+- name: Verificar que httpd este corriendo
+  ansible.builtin.service:
+    name: httpd
+  register: httpd_status
+  when: tipo_objetivo == "INSTALAR"
+
+- name: Mostrar estado del servicio httpd
+  ansible.builtin.debug:
+    msg: "Servicio httpd esta {{ httpd_status.status.ActiveState }}"
+  when: tipo_objetivo == "INSTALAR"
+
+- name: Copiar archivo index.hmtl de template
+  ansible.builtin.template:
+    src: templates/index.html.j2
+    dest: /var/www/html/index.html
+  notify: Restart httpd
+  when: tipo_objetivo == "INSTALAR"
+
+- name: backup del archivo de configuracion httpd.conf
+  ansible.builtin.copy:
+    src: /var/www/html/index.html
+    dest: /tmp/httpd.conf.bak
+    remote_src: yes
+    backup: yes
+  ignore_errors: true
+  when: tipo_objetivo == "DESINSTALAR"
+
+- name: Instalar httpd
+  ansible.builtin.dnf:
+    name: httpd
+    state: absent
+    autoremove: no
+  when: tipo_objetivo == "DESINSTALAR"
