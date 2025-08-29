@@ -1,0 +1,14 @@
+---
+- name: Se llama al rol windows
+  hosts: Windows
+
+  vars: 
+    - ansible_user: "{{ user_win_server }}"
+    - ansible_password: "{{ passwd_win_server }}"
+  roles:
+    - win
+
+- name: Se llama al rol Red Hat
+  hosts: Linux
+  roles:
+    - rhel
