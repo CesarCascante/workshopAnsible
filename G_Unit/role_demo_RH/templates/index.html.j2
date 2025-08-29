@@ -1,10 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Bienvenido</title>
+    <meta charset="UTF-8">
+    <title>Curso de Ansible</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            color: #fff;
+            text-align: center;
+        }
+
+        .container {
+            padding: 100px 20px;
+        }
+
+        #formulario {
+            margin-top: 100px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            width: 300px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #fff;
+            color: #0072ff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        #contenido {
+            display: none;
+            margin-top: 50px;
+        }
+
+        img {
+            width: 200px;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+
+        .info {
+            font-size: 20px;
+            margin-top: 20px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
 </head>
 <body>
-    <h1>¡Hola desde Ansible!</h1>
-    <p>Esta es una página básica desplegada con un role de Linux.</p>
+    <div class="container">
+        <div id="formulario">
+            <h1>¡Bienvenido!</h1>
+            <p>Por favor, ingresa tu nombre para comenzar:</p>
+            <input type="text" id="nombre" placeholder="Tu nombre aquí" required>
+            <br>
+            <button onclick="mostrarContenido()">Entrar</button>
+        </div>
+
+        <div id="contenido">
+            <h1 id="saludo"></h1>
+            <img src="https://www.ansible.com/hubfs/Red_Hat-AnsibleB.png
+            <div class="info">
+                <p>Has ingresado al <strong>Curso de Ansible</strong>, una poderosa herramienta de automatización para administradores de sistemas y desarrolladores.</p>
+                <p>Con Ansible aprenderás a:</p>
+                <ul style="text-align: left;">
+                    <li>Automatizar tareas repetitivas</li>
+                    <li>Gestionar configuraciones de servidores</li>
+                    <li>Desplegar aplicaciones de forma eficiente</li>
+                    <li>Orquestar infraestructura en múltiples entornos</li>
+                </ul>
+                <p>¡Prepárate para dominar la automatización con Ansible!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function mostrarContenido() {
+            const nombre = document.getElementById('nombre').value;
+            if (nombre.trim() !== "") {
+                document.getElementById('formulario').style.display = 'none';
+                document.getElementById('contenido').style.display = 'block';
+                document.getElementById('saludo').innerHTML = `¡Hola, <strong>${nombre}</strong>! Bienvenido al Curso de Ansible`;
+            }
+        }
+    </script>
 </body>
 </html>
