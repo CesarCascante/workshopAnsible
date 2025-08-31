@@ -9,4 +9,4 @@ collections:
     source: https://galaxy.ansible.com
     
   - name: banistmo.demo
-    source: https://aapnodehub.idm.gbmcoelab.com/api/galaxy/
+    source: https://172.31.235.80/pulp_ansible/galaxy/published/
