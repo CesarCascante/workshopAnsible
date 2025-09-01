@@ -1,6 +1,6 @@
 ---
 - name: Consultar máquinas virtuales en vcenter
-  hosts: localhots
+  hosts: localhost
   gather_facts: false
   vars: 
     - vcenter_hostname: vcenter.gbmcoelab.com
