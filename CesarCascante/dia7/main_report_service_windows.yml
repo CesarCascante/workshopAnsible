@@ -12,6 +12,20 @@
         src: "C:\\Temp\\{{ inventory_hostname_short }}.txt"
         dest: "/tmp/{{ inventory_hostname_short }}.txt"
         flat: yes
+    
+    - name: encontrar archivos.
+      find:
+        paths: "/tmp/"
+        patterns: "*.txt" 
+        recurse: true
+      register: files_found
+      run_once: true
+      delegate_to: localhost
+
+    - name: Setear variable de archivos 
+      set_fact:
+        files_to_email: "{{ files_found.files|json_query('[].path') }}"
+      delegate_to: localhost
 
     - name: envio de correo.
       mail:
@@ -26,12 +40,7 @@
           Hola,
           Este es el reporte del dia {{ ansible_date_time.date }}.
           Saludos.
-        attach:
-          - /tmp/capwinserv01.txt
-          - /tmp/capwinserv02.txt
-          - /tmp/capwinserv03.txt
-          - /tmp/capwinserv04.txt
-          - /tmp/capwinserv05.txt
+        attach: "{{ files_to_email }}"
       failed_when: false
       run_once: true
       delegate_to: localhost
