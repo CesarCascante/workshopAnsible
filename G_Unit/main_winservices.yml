@@ -1,7 +1,9 @@
 ---
 - name: Reporte de servicios Windows y envío por correo
   hosts: all
-  gather_facts: no
+  vars:
+    ruta_reporte: "C:\\Temp\\reporte_servicios_{{ ansible_hostname }}.txt"
+   
   tasks:
 
     - name: Obtener servicios en estado Running y Stopped
@@ -26,18 +28,19 @@
       win_copy:
         content: "{{ reporte_servicios }}"
         dest: "{{ ruta_reporte }}"
-
+       
     - name: Enviar reporte por correo
+      delegate_to: localhost
       community.general.mail:
         host: "{{ servidor_smtp }}"
         port: "{{ port_server }}"
         to: "{{ destinatarios }}"
         from: "{{ mail_from }}"
-        subject: "Reporte de Servicios Windows - {{ ansible_hostname }}"
+        subject: "Reporte de Servicios Windows"
         body: |
           Estimado equipo,
 
-          Adjunto el reporte de servicios del servidor {{ ansible_hostname }}.
+          Adjunto el reporte de servicios del servidor.
 
           Saludos,
           Automatización Ansible
