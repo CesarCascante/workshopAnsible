@@ -1,13 +1,16 @@
 ---
-- name: Reporte de servicios Windows en capwinserv04
+- name: Reporte de servicios Windows y envío por correo
   hosts: capwinserv04
   gather_facts: no
-  tasks:
+  vars:
+    ruta_reporte: "C:\\Temp\\reporte_servicios_{{ ansible_hostname }}.txt"
+    correo_destino: "guillermo.palacios@tucorreo.com"  # <-- Actualiza con tu correo real
+    servidor_smtp: "smtp.tudominio.com"                # <-- Actualiza con tu servidor SMTP
+    mail_from: "reportes@tudominio.com"                # <-- Correo del remitente
+    port_server: 25                                     # <-- Puerto SMTP (ajusta si usas TLS/SSL)
+    destinatarios: "guillermo.palacios@tucorreo.com"    # <-- Puedes usar lista separada por comas
 
-    - name: Obtener nombre del servidor
-      win_shell: |
-        $env:COMPUTERNAME
-      register: nombre_servidor
+  tasks:
 
     - name: Obtener servicios en estado Running y Stopped
       win_shell: |
@@ -30,4 +33,21 @@
     - name: Guardar reporte en C:\Temp
       win_copy:
         content: "{{ reporte_servicios }}"
-        dest: "C:\\Temp\\reporte_servicios_{{ nombre_servidor.stdout }}.txt"
+        dest: "{{ ruta_reporte }}"
+
+    - name: Enviar reporte por correo
+      community.general.mail:
+        host: "{{ servidor_smtp }}"
+        port: "{{ port_server }}"
+        to: "{{ destinatarios }}"
+        from: "{{ mail_from }}"
+        subject: "Reporte de Servicios Windows - {{ ansible_hostname }}"
+        body: |
+          Estimado equipo,
+
+          Adjunto el reporte de servicios del servidor {{ ansible_hostname }}.
+
+          Saludos,
+          Automatización Ansible
+        attach:
+          - "{{ ruta_reporte }}"
