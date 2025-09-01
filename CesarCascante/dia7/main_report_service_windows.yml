@@ -1,0 +1,36 @@
+---
+- name: Reporte de servicios en running de windows.
+  hosts: all
+  tasks: 
+    
+    - name: Ejecutar script de servicios.ps1
+      ansible.windows.win_shell: Get-Service | Where-Object { $_.Status -like "Running" } | tee C:\\Temp\\{{ inventory_hostname_short }.txt
+      register:  result_script 
+
+    - name: Mover archivo a localhost
+      ansible.windows.win_copy:
+        src: C:\\Temp\\{{ inventory_hostname_short }}.txt
+        dest: /tmp/
+        remote_src: yes
+
+    - name: envio de correo.
+      mail:
+        host: "{{ mail_server }}"
+        port: "{{ port_server }}"
+        username: "{{ user_mailserver | default(omit) }}"
+        password: "{{ passwd_mailserver | default(omit) }}"
+        to: "{{ mail_to }}"
+        from: "{{ mail_from }}"
+        subject: "Reporte de servidores"
+        body: |
+          Hola,
+          Este es el reporte del dia {{ ansible_date_time.date }}.
+          Saludos.
+        attach:
+          - /tmp/capwinserv01.txt
+          - /tmp/capwinserv02.txt
+          - /tmp/capwinserv03.txt
+          - /tmp/capwinserv04.txt
+          - /tmp/capwinserv05.txt
+      failed_when: false
+      delegate_to: localhost
