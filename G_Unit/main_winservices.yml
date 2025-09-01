@@ -1,15 +1,7 @@
 ---
 - name: Reporte de servicios Windows y envío por correo
-  hosts: capwinserv04
+  hosts: all
   gather_facts: no
-  vars:
-    ruta_reporte: "C:\\Temp\\reporte_servicios_{{ ansible_hostname }}.txt"
-    correo_destino: "guillermo.palacios@tucorreo.com"  # <-- Actualiza con tu correo real
-    servidor_smtp: "smtp.tudominio.com"                # <-- Actualiza con tu servidor SMTP
-    mail_from: "reportes@tudominio.com"                # <-- Correo del remitente
-    port_server: 25                                     # <-- Puerto SMTP (ajusta si usas TLS/SSL)
-    destinatarios: "guillermo.palacios@tucorreo.com"    # <-- Puedes usar lista separada por comas
-
   tasks:
 
     - name: Obtener servicios en estado Running y Stopped
