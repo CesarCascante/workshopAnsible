@@ -29,6 +29,15 @@
         content: "{{ reporte_servicios }}"
         dest: "{{ ruta_reporte }}"
        
+    - name: encontrar archivos.
+      find:
+        paths: "/tmp/"
+        patterns: "*.txt" 
+        recurse: true
+      register: files_found
+      run_once: true
+      delegate_to: localhost
+
     - name: Enviar reporte por correo
       delegate_to: localhost
       community.general.mail:
