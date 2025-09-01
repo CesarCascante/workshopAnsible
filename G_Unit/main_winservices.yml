@@ -32,8 +32,10 @@
     - name: Enviar reporte por correo
       delegate_to: localhost
       community.general.mail:
-        host: "{{ servidor_smtp }}"
+        host: "{{ mail_server }}"
         port: "{{ port_server }}"
+        username: "{{ user_mailserver | default(omit) }}"
+        password: "{{ passwd_mailserver | default(omit) }}"
         to: "{{ destinatarios }}"
         from: "{{ mail_from }}"
         subject: "Reporte de Servicios Windows"
