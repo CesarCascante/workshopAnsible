@@ -18,10 +18,12 @@
         paths: "/tmp/"
         recurse: true
       register: files_found
+      delegate_to: localhost
 
     - name: Setear variable de archivos 
       set_fact:
         files_to_email: "{{ files_found.files|json_query('[].path') }}"
+      delegate_to: localhost
 
     - name: envio de correo.
       mail:
