@@ -4,13 +4,13 @@
   gather_facts: false
   vars: 
     - vcenter_hostname: vcenter.gbmcoelab.com
-    - vmware_data: 
+    - vmware_data: SabanaLab
   tasks: 
 
     - name: Gather one specific VM
       community.vmware.vmware_guest_info:
         hostname: "{{ vcenter_hostname }}"
-        #datacenter: "{{ vmware_data }}"
+        datacenter: "{{ vmware_data }}"
         name: "{{ item }}"
         validate_certs: no
       register: vm_info
