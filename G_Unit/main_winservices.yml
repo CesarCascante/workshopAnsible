@@ -1,9 +1,10 @@
 ---
-- name: Reporte de servicios Windows y envío por correo
+- name: Generar reporte de servicios Windows
   hosts: all
+  gather_facts: false
   vars:
     ruta_reporte: "C:\\Temp\\reporte_servicios_{{ ansible_hostname }}.txt"
-   
+
   tasks:
 
     - name: Obtener servicios en estado Running y Stopped
@@ -28,18 +29,25 @@
       win_copy:
         content: "{{ reporte_servicios }}"
         dest: "{{ ruta_reporte }}"
-       
-    - name: encontrar archivos.
-      find:
-        paths: "/tmp/"
-        patterns: "*.txt" 
-        recurse: true
-      register: files_found
-      run_once: true
-      delegate_to: localhost
 
-    - name: Enviar reporte por correo
-      delegate_to: localhost
+    - name: Copiar reporte al contenedor
+      fetch:
+        src: "{{ ruta_reporte }}"
+        dest: "/tmp/reportes/"
+        flat: yes
+
+    - name: Enviar todos los reportes por correo
+      hosts: localhost
+      gather_facts: false
+      tasks:
+
+    - name: Buscar todos los reportes descargados
+      find:
+        paths: "/tmp/reportes/"
+        patterns: "reporte_servicios_*.txt"
+      register: reportes_encontrados
+
+    - name: Enviar correo con todos los reportes adjuntos
       community.general.mail:
         host: "{{ mail_server }}"
         port: "{{ port_server }}"
@@ -47,13 +55,12 @@
         password: "{{ passwd_mailserver | default(omit) }}"
         to: "{{ destinatarios }}"
         from: "{{ mail_from }}"
-        subject: "Reporte de Servicios Windows"
+        subject: "Reportes de Servicios Windows - Todos los servidores"
         body: |
           Estimado equipo,
 
-          Adjunto el reporte de servicios del servidor.
+          Adjunto los reportes de servicios de todos los servidores.
 
           Saludos,
           Automatización Ansible
-        attach:
-          - "{{ ruta_reporte }}"
+        attach: "{{ reportes_encontrados.files | map(attribute='path') | list }}"
