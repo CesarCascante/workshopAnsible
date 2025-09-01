@@ -12,7 +12,7 @@
         vm_name: '{{item}}'
         validate_certs: no
       register: vm_info
-          loop:
+      loop:
         - caprhelserv01
         - caprhelserv02
         - caprhelserv03
