@@ -26,6 +26,8 @@
         vm_name: "{{ item }}"
       loop: "{{ vm_list }}"
       register: vm_info
+      loop_control:
+        label: "{{ item }}"
 
     - name: Filtrar VMs con VMware Tools desactualizado
       set_fact:
@@ -33,8 +35,10 @@
 
     - name: Mostrar VMs que requieren actualización
       debug:
-        msg: "VM {{ item.instance.uuid }} requiere actualización de VMware Tools"
+        msg: "VM con UUID {{ item.instance.uuid }} requiere actualización de VMware Tools (estado: {{ item.vmware_tools_status }})"
       loop: "{{ vms_desactualizadas }}"
+      loop_control:
+        label: "{{ item.instance.uuid }}"
 
     - name: Actualizar VMware Tools en VMs desactualizadas
       community.vmware.vmware_tools_upgrade:
@@ -42,6 +46,8 @@
         validate_certs: "{{ validate_certs }}"
         uuid: "{{ item.instance.uuid }}"
       loop: "{{ vms_desactualizadas }}"
+      loop_control:
+        label: "{{ item.instance.uuid }}"
       register: actualizaciones
 
     - name: Generar informe de actualización
