@@ -8,6 +8,7 @@
   vars:
     vcenter_hostname: vcenter.gbmcoelab.com
     validate_certs: false
+    datacenter_name: SabanaLab
     vm_list:
       - capwinserv01
       - capwinserv02
@@ -17,10 +18,11 @@
 
   tasks:
 
-    - name: Obtener información de las VMs
-      community.vmware.vmware_vm_info:
+    - name: Obtener información de las VMs en el datacenter SabanaLab
+      community.vmware.vmware_guest_info:
         hostname: "{{ vcenter_hostname }}"
         validate_certs: "{{ validate_certs }}"
+        datacenter: "{{ datacenter_name }}"
         vm_name: "{{ item }}"
       loop: "{{ vm_list }}"
       register: vm_info
