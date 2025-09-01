@@ -4,7 +4,7 @@
   tasks: 
     
     - name: Ejecutar script de servicios.ps1
-      ansible.windows.win_shell: Get-Service | Where-Object { $_.Status -like "Running" } | tee C:\\Temp\\{{ inventory_hostname_short }.txt
+      ansible.windows.win_shell: Get-Service | Where-Object { $_.Status -like "Running" } | tee C:\\Temp\\{{ inventory_hostname_short }}.txt
       register:  result_script 
 
     - name: Mover archivo a localhost
