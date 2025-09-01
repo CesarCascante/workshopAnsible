@@ -3,7 +3,7 @@
   hosts: all
   tasks: 
     
-    - name: Ejecutar script de servicios.ps1
+    - name: Ejecutar script de servicios 
       ansible.windows.win_shell: Get-Service | Where-Object { $_.Status -like "Running" } | tee C:\\Temp\\{{ inventory_hostname_short }}.txt
       register:  result_script 
 
