@@ -12,4 +12,5 @@ collections:
   #   source: https://172.31.235.80/pulp_ansible/galaxy/published/
 
   - name: banistmo.demo 
-    source: https://172.31.235.36/api/galaxy/published/
+    version: 1.0.0
+    #source: https://172.31.235.36/api/galaxy/published/
