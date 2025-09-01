@@ -4,12 +4,14 @@
   gather_facts: false
   vars: 
     - vcenter_hostname: vcenter.gbmcoelab.com
+    - vmware_data: 
   tasks: 
 
     - name: Gather one specific VM
       community.vmware.vmware_guest_info:
         hostname: "{{ vcenter_hostname }}"
-        vm_name: "{{ item }}"
+        #datacenter: "{{ vmware_data }}"
+        name: "{{ item }}"
         validate_certs: no
       register: vm_info
       loop:
