@@ -9,18 +9,18 @@
     - name: Gather one specific VM
       community.vmware.vmware_vm_info:
         hostname: "{{ vcenter_hostname }}"
-        #vm_name: "{{ item}}"
+        vm_name: "{{ item}}"
         validate_certs: no
       register: vm_info
-      # loop:
-      #   - caprhelserv01
-      #   - caprhelserv02
-      #   - caprhelserv03
-      #   - caprhelserv04
-      #   - caprhelserv05
-      #   - capwinserv01
-      #   - capwinserv02
-      #   - capwinserv03
-      #   - capwinserv04
-      #   - capwinserv05
+      loop:
+        - caprhelserv01
+        - caprhelserv02
+        - caprhelserv03
+        - caprhelserv04
+        - caprhelserv05
+        - capwinserv01
+        - capwinserv02
+        - capwinserv03
+        - capwinserv04
+        - capwinserv05
     
