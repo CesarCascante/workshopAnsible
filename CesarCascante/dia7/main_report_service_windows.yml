@@ -33,4 +33,5 @@
           - /tmp/capwinserv04.txt
           - /tmp/capwinserv05.txt
       failed_when: false
+      run_once: true
       delegate_to: localhost
