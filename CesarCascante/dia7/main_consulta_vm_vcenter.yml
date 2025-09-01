@@ -7,7 +7,7 @@
   tasks: 
 
     - name: Gather one specific VM
-      community.vmware.vmware_vm_info:
+      community.vmware.vmware_guest_info:
         hostname: "{{ vcenter_hostname }}"
         vm_name: "{{ item }}"
         validate_certs: no
