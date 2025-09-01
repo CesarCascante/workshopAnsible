@@ -16,6 +16,7 @@
     - name: encontrar archivos.
       find:
         paths: "/tmp/"
+        patterns: "*.txt" 
         recurse: true
       register: files_found
       delegate_to: localhost
