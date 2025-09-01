@@ -1,0 +1,46 @@
+---
+- name: Reporte de servicios en running de windows.
+  hosts: all
+  tasks: 
+    
+    - name: Ejecutar script de servicios 
+      ansible.windows.win_shell: Get-Service | Where-Object { $_.Status -like "Running" } | tee C:\\Temp\\{{ inventory_hostname_short }}.txt
+      register:  result_script 
+
+    - name: Mover archivo a localhost
+      fetch:
+        src: "C:\\Temp\\{{ inventory_hostname_short }}.txt"
+        dest: "/tmp/{{ inventory_hostname_short }}.txt"
+        flat: yes
+    
+    - name: encontrar archivos.
+      find:
+        paths: "/tmp/"
+        patterns: "*.txt" 
+        recurse: true
+      register: files_found
+      run_once: true
+      delegate_to: localhost
+
+    - name: Setear variable de archivos 
+      set_fact:
+        files_to_email: "{{ files_found.files|json_query('[].path') }}"
+      delegate_to: localhost
+
+    - name: envio de correo.
+      mail:
+        host: "{{ mail_server }}"
+        port: "{{ port_server }}"
+        username: "{{ user_mailserver | default(omit) }}"
+        password: "{{ passwd_mailserver | default(omit) }}"
+        to: "{{ mail_to }}"
+        from: "{{ mail_from }}"
+        subject: "Reporte de servidores"
+        body: |
+          Hola,
+          Este es el reporte del dia {{ ansible_date_time.date }}.
+          Saludos.
+        attach: "{{ files_to_email }}"
+      failed_when: false
+      run_once: true
+      delegate_to: localhost

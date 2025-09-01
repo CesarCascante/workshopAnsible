@@ -1,0 +1,16 @@
+---
+- name: Eliminar snapshot VMware mayores a 3 dias.
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - vars/main.yml
+  collections:
+    - community.vmware
+    - vmware.vmware_rest
+  tasks:
+
+    - name: Obtener datos de las VMs
+      community.vmware.vmware_vm_info:
+        validate_certs: no
+      delegate_to: localhost
+      register: vmware_vms

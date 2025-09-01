@@ -8,3 +8,12 @@ collections:
   - name: ansible.windows
     source: https://galaxy.ansible.com
     
+  # - name: banistmo.demo
+  #   source: https://172.31.235.80/pulp_ansible/galaxy/published/
+
+  - name: banistmo.demo 
+    version: 1.0.0
+    #source: https://172.31.235.36/api/galaxy/published/
+
+  - name: ibm.power_ibmi
+    source: https://galaxy.ansible.com

@@ -1,0 +1,68 @@
+---
+- name: Generar reporte de servicios Windows
+  hosts: all
+  gather_facts: false
+  vars:
+    ruta_reporte: "C:\\Temp\\reporte_servicios_{{ ansible_hostname }}.txt"
+
+  tasks:
+
+    - name: Obtener servicios en estado Running y Stopped
+      win_shell: |
+        Get-Service | Select-Object Name, Status | ConvertTo-Json -Depth 2
+      register: servicios_json
+
+    - name: Crear contenido del reporte
+      set_fact:
+        reporte_servicios: |
+          Servicios en estado RUNNING:
+          {% for svc in servicios_json.stdout | from_json if svc.Status == 'Running' %}
+          - {{ svc.Name }}
+          {% endfor %}
+
+          Servicios en estado STOPPED:
+          {% for svc in servicios_json.stdout | from_json if svc.Status == 'Stopped' %}
+          - {{ svc.Name }}
+          {% endfor %}
+
+    - name: Guardar reporte en C:\Temp
+      win_copy:
+        content: "{{ reporte_servicios }}"
+        dest: "{{ ruta_reporte }}"
+
+    - name: Copiar reporte al controlador
+      fetch:
+        src: "{{ ruta_reporte }}"
+        dest: "/tmp/reportes/"
+        flat: yes
+
+    
+- name: Enviar todos los reportes por correo
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+
+    - name: Buscar todos los reportes descargados
+      find:
+        paths: "/tmp/reportes/"
+        patterns: "reporte_servicios_*.txt"
+      register: reportes_encontrados
+
+    - name: Enviar correo con todos los reportes adjuntos
+      community.general.mail:
+        host: "{{ mail_server }}"
+        port: "{{ port_server }}"
+        username: "{{ user_mailserver | default(omit) }}"
+        password: "{{ passwd_mailserver | default(omit) }}"
+        to: "{{ destinatarios }}"
+        from: "{{ mail_from }}"
+        subject: "Reportes de Servicios Windows - Todos los servidores"
+        body: |
+          Estimado equipo,
+
+          Adjunto los reportes de servicios de todos los servidores.
+
+          Saludos,
+          Automatización Ansible
+        attach: "{{ reportes_encontrados.files | map(attribute='path') | list }}"
