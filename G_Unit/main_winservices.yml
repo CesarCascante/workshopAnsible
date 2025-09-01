@@ -30,16 +30,18 @@
         content: "{{ reporte_servicios }}"
         dest: "{{ ruta_reporte }}"
 
-    - name: Copiar reporte al contenedor
+    - name: Copiar reporte al controlador
       fetch:
         src: "{{ ruta_reporte }}"
         dest: "/tmp/reportes/"
         flat: yes
 
-    - name: Enviar todos los reportes por correo
-      hosts: localhost
-      gather_facts: false
-      tasks:
+    
+- name: Enviar todos los reportes por correo
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
 
     - name: Buscar todos los reportes descargados
       find:
