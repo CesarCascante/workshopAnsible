@@ -8,10 +8,10 @@
       register:  result_script 
 
     - name: Mover archivo a localhost
-      ansible.windows.win_copy:
-        src: C:\\Temp\\{{ inventory_hostname_short }}.txt
-        dest: /tmp/
-        remote_src: yes
+      fetch:
+        src: "C:\\Temp\\{{ inventory_hostname_short }}.txt"
+        dest: "/tmp/{{ inventory_hostname_short }}.txt"
+        flat: yes
 
     - name: envio de correo.
       mail:
