@@ -1,0 +1,6 @@
+#    vcenterhostname: vcentersabana
+#    vmware_path: "/VM Temporales/"
+#    vmware_data: SabanaLab
+vm_host_dc_coelab : vcentersabana.labsabana.local
+vmware_data: DATACENTER_CPP
+vmware_path: "/VM Temporales/"
