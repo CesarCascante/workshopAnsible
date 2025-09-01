@@ -14,3 +14,6 @@ collections:
   - name: banistmo.demo 
     version: 1.0.0
     #source: https://172.31.235.36/api/galaxy/published/
+
+  - name: ibm.power_ibmi
+    source: https://galaxy.ansible.com
