@@ -1,38 +1,17 @@
 ---
-- name: Actualizar VMware Tools en VMs específicas
+- name: Consultar VMs en mi vcenter.
   hosts: localhost
-  gather_facts: no
-  collections:
-    - community.vmware
+  gather_facts: false
+  vars: 
+    - vcenter_hostname: vcenter.gbmcoelab.com
+    - vmware_data: SabanaLab
+  tasks: 
 
-  vars:
-    vcenter_hostname: "vcentersabana.labsabana.local"
-    vmware_data: DATACENTER_CPP
-    vmware_path: "/VM Temporales/"
-    vcenter_username: "administrator@vsphere.local"
-    vcenter_password: "TuPasswordSeguro"
-    validate_certs: false
-    vm_list:
-      - "caprhelserv02"
-      - "capwinserv02"
-  tasks:
-
-    - name: Validar uid de VMs
-      community.vmware.vmware_guest_info:
-        hostname: "{{ vcenter_hostname }}"
-        datacenter: "{{ vmware_data }}"
-        name: "{{ item }}"
-        validate_certs: no
-      register: vm_info
-      loop: "{{ vm_list }}"
-      delegate_to: localhost
-
-    - name: Actualizar VMware Tools en las VMs
-      community.vmware.vmware_vm_vmtools_upgrade:
-        hostname: "{{ vcenter_hostname }}"
-        username: "{{ vcenter_username }}"
-        password: "{{ vcenter_password }}"
-        validate_certs: "{{ validate_certs }}"
-        name: "{{ item }}"
-        state: "present"
-      loop: "{{ vm_list }}"
+    - name: Llamda de actualizar vmware tools
+      include_tasks: 
+        file: sv_actualizar_VMwareTools.yml
+      loop:
+        - "caprhelserv02"
+        - "capwinserv02"
+      loop_control:
+        loop_var: servidor
