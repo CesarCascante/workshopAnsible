@@ -1,0 +1,17 @@
+---
+- name: Consultar inventario de máquinas virtuales
+  hosts: localhost
+  gather_facts: false
+  vars: 
+    - vcenter_hostname: vcenter.gbmcoelab.com
+    - vmware_data: SabanaLab
+  tasks: 
+
+    - name: Actualizar vmware tools
+      include_tasks: 
+        file: tasks/proc_update_vmtools.yml
+      loop:
+        - caprhelserv03
+        - capwinserv03
+      loop_control:
+        loop_var: vmserver
