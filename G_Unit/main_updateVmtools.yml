@@ -8,12 +8,12 @@
   vars:
     vcenter_hostname: "vcenter.gbmcoelab.com"
     datacenter_name: "SabanaLab"
-    servidores: "{{ servidores_input.split(',') | map('trim') | list }}"
+    #servidores: "{{ servidores_input.split(',') | map('trim') | list }}"
 
 
   tasks:
     - name: Llamada de actualizar VMware Tools
-      include_tasks: tasks/actualiza_vmware_tools.yml
-      loop: "{{ servidores }}"
+      include_tasks: actualiza_vmware_tools.yml
+      loop: "{{ servidores_input.split(',') | map('trim') | list }}"
       loop_control:
         loop_var: servidor
