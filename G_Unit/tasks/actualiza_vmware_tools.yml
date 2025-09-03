@@ -1,7 +1,7 @@
 - name: Gather one specific VM
   community.vmware.vmware_guest_info:
     hostname: "{{ vcenter_hostname }}"
-    datacenter: "{{ vmware_data }}"
+    datacenter: "{{ datacenter_name }}"
     name: "{{ servidor }}"
     validate_certs: no
   register: vm_info
@@ -9,6 +9,6 @@
 - name: Upgrade VMware Tools using uuid
   community.vmware.vmware_guest_tools_upgrade:
     hostname: "{{ vcenter_hostname }}"
-    datacenter: "{{ vmware_data }}"
+    datacenter: "{{ datacenter_name }}"
     uuid: "{{ vm_info.instance.hw_product_uuid }}"
   register: upgrade_tools
