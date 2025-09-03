@@ -2,7 +2,7 @@
   community.vmware.vmware_guest_info:
     hostname: "{{ vcenter_hostname }}"
     datacenter: "{{ vmware_data }}"
-    name: "{{ vmsermer }}"
+    name: "{{ vmserver }}"
     validate_certs: no
   register: vm_info
 
