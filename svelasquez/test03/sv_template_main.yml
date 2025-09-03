@@ -11,4 +11,4 @@
         dest: /tmp/Reporte_{{ ansible_date_time.date }}_{{ ansible_hostname }}.csv
         owner: root
         group: root
-        mode: '0644'
+       mode: '0644'
