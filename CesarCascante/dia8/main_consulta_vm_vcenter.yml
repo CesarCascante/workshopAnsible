@@ -12,14 +12,6 @@
         file: tasks/actualiza_vmware_tools.yml
       loop:
         - caprhelserv01
-        - caprhelserv02
-        - caprhelserv03
-        - caprhelserv04
-        - caprhelserv05
         - capwinserv01
-        - capwinserv02
-        - capwinserv03
-        - capwinserv04
-        - capwinserv05
       loop_control:
         loop_var: servidor
