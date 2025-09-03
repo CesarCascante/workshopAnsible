@@ -1,3 +1,4 @@
+---
 - name: Gather one specific VM
   community.vmware.vmware_guest_info:
     hostname: "{{ vcenter_hostname }}"
@@ -5,6 +6,7 @@
     name: "{{ servidor }}"
     validate_certs: no
   register: vm_info
+
 
 - name: Upgrade VMware Tools using uuid
   community.vmware.vmware_guest_tools_upgrade:

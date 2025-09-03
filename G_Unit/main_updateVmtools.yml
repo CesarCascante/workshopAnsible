@@ -1,3 +1,4 @@
+---
 - name: Validar y actualizar VMware Tools en VMs específicas
   hosts: localhost
   gather_facts: no
@@ -8,7 +9,6 @@
   vars:
     vcenter_hostname: "vcenter.gbmcoelab.com"
     datacenter_name: "SabanaLab"
-    #servidores: "{{ servidores_input.split(',') | map('trim') | list }}"
 
 
   tasks:
