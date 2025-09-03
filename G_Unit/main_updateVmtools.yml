@@ -13,7 +13,7 @@
 
   tasks:
     - name: Llamada de actualizar VMware Tools
-      include_tasks: actualiza_vmware_tools.yml
+      include_tasks: task/actualiza_vmware_tools.yml
       loop: "{{ servidores_input.split(',') | map('trim') | map('lower') | list }}"
       loop_control:
         loop_var: servidor
