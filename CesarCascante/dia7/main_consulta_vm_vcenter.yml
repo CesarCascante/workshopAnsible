@@ -4,12 +4,14 @@
   gather_facts: false
   vars: 
     - vcenter_hostname: vcenter.gbmcoelab.com
+    - vmware_data: SabanaLab
   tasks: 
 
     - name: Gather one specific VM
-      community.vmware.vmware_vm_info:
+      community.vmware.vmware_guest_info:
         hostname: "{{ vcenter_hostname }}"
-        vm_name: "{{ item }}"
+        datacenter: "{{ vmware_data }}"
+        name: "{{ item }}"
         validate_certs: no
       register: vm_info
       loop:
@@ -23,4 +25,13 @@
         - capwinserv03
         - capwinserv04
         - capwinserv05
+    
+    - name: Upgrade VMware Tools using uuid
+      community.vmware.vmware_guest_tools_upgrade:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        datacenter: "{{ datacenter_name }}"
+        uuid: "{{ vm_facts.instance.hw_product_uuid }}"
+      delegate_to: localhost
     

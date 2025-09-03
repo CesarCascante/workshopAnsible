@@ -1,0 +1,60 @@
+---
+- name: Verificar y actualizar VMware Tools en VMs Windows
+  hosts: localhost
+  gather_facts: false
+  collections:
+    - community.vmware
+
+  vars:
+    vcenter_hostname: vcenter.gbmcoelab.com
+    validate_certs: false
+    datacenter_name: SabanaLab
+    vm_list:
+      - capwinserv01
+      - capwinserv02
+      - capwinserv03
+      - capwinserv04
+      - capwinserv05
+
+  tasks:
+
+    - name: Obtener información de las VMs en el datacenter SabanaLab
+      community.vmware.vmware_guest_info:
+        hostname: "{{ vcenter_hostname }}"
+        validate_certs: "{{ validate_certs }}"
+        datacenter: "{{ datacenter_name }}"
+        vm_name: "{{ item }}"
+      loop: "{{ vm_list }}"
+      register: vm_info
+      loop_control:
+        label: "{{ item }}"
+
+    - name: Filtrar VMs con VMware Tools desactualizado
+      set_fact:
+        vms_desactualizadas: "{{ vm_info.results | selectattr('vmware_tools_status', 'ne', 'toolsOk') | list }}"
+
+    - name: Mostrar VMs que requieren actualización
+      debug:
+        msg: "VM con UUID {{ item.instance.uuid }} requiere actualización de VMware Tools (estado: {{ item.vmware_tools_status }})"
+      loop: "{{ vms_desactualizadas }}"
+      loop_control:
+        label: "{{ item.instance.uuid }}"
+
+    - name: Actualizar VMware Tools en VMs desactualizadas
+      community.vmware.vmware_tools_upgrade:
+        hostname: "{{ vcenter_hostname }}"
+        validate_certs: "{{ validate_certs }}"
+        uuid: "{{ item.instance.uuid }}"
+      loop: "{{ vms_desactualizadas }}"
+      loop_control:
+        label: "{{ item.instance.uuid }}"
+      register: actualizaciones
+
+    - name: Generar informe de actualización
+      copy:
+        content: |
+          UUID,Estado_Anterior,Actualizado
+          {% for vm in vm_info.results %}
+          {{ vm.instance.uuid }},{{ vm.vmware_tools_status }},{% if vm in vms_desactualizadas %}True{% else %}False{% endif %}
+          {% endfor %}
+        dest: "./informe_vmware_tools_uuid.csv"

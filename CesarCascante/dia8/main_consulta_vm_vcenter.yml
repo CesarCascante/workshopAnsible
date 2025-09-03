@@ -1,0 +1,17 @@
+---
+- name: Consultar VMs en mi vcenter.
+  hosts: localhost
+  gather_facts: false
+  vars: 
+    - vcenter_hostname: vcenter.gbmcoelab.com
+    - vmware_data: SabanaLab
+  tasks: 
+
+    - name: Llamda de actualizar vmware tools
+      include_tasks: 
+        file: tasks/actualiza_vmware_tools.yml
+      loop:
+        - caprhelserv01
+        - capwinserv01
+      loop_control:
+        loop_var: servidor
