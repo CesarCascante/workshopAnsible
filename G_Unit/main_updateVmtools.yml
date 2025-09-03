@@ -7,7 +7,7 @@
     - community.vmware
 
   vars:
-    vcenter_hostname: "vcenter.gbmcoelab.com"
+    vcenter_hostname: "vcenter.gbmcoelab.com "
     datacenter_name: "SabanaLab"
 
 
