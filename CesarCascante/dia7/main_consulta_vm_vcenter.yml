@@ -26,3 +26,12 @@
         - capwinserv04
         - capwinserv05
     
+    - name: Upgrade VMware Tools using uuid
+      community.vmware.vmware_guest_tools_upgrade:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        datacenter: "{{ datacenter_name }}"
+        uuid: "{{ vm_facts.instance.hw_product_uuid }}"
+      delegate_to: localhost
+    

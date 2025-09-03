@@ -1,9 +1,12 @@
 ---
-- name: Verificar y actualizar VMware Tools en VMs Windows
-  hosts: localhost
-  gather_facts: false
-  collections:
-    - community.vmware
+- name: Actualizar VMware Tools en VMs desactualizadas
+  community.vmware.vmware_guest_tools_upgrade:
+    hostname: "{{ vcenter_hostname }}"
+    validate_certs: "{{ validate_certs }}"
+    datacenter: "{{ datacenter_name }}"
+    uuid: "{{ item.instance.uuid }}"
+  delegate_to: localhost
+
 
   vars:
     vcenter_hostname: vcenter.gbmcoelab.com
