@@ -1,0 +1,10 @@
+---
+- name: Housekeeping snapshopts mayores a 3 días
+  hosts: localhosts
+  gather_facts: false
+  tasks: 
+
+    - name: Uso de modulo de vmware
+      community.vmware.vmware_vm_info:
+        hostname: '{{ vcenter_hostname }}'
+      register: vm_info
