@@ -1,7 +1,7 @@
 ---
 - name: Playbook para eliminar snapshots mayores a 3 dias.
   hosts: localhost
-  gather_facts: false
+  gather_facts: true
   vars_files:
     - vars/main.yml
   tasks:
@@ -15,6 +15,7 @@
       include_tasks:
         file: tasks/consulta_snapshots.yml
       loop: "{{ vm_info.virtual_machines }}"
+      when: vm_name.guest_name == "caprhelserv01"
       loop_control:
         loop_var: vm_name
 

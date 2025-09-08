@@ -1,0 +1,24 @@
+---
+- name: Extrar dato de fecha de snapshot. 
+  set_fact:
+    fecha_snapshot: "{{ snapshots.creation_time }}"
+
+- name: Crear archivo script de fecha en localhost.
+  template:
+    src: templates/comparar_fechas.sh.j2
+    dest: /tmp/comparar_fechas.sh
+    mode: '0755'
+
+- name: Ejecutar script y obtener resultado.
+  command: /tmp/comparar_fechas.sh
+  register: resultado_script
+
+- name: Mostrar resultado en caso de eliminar. 
+  debug:
+    msg: "El snapshot {{ snapshots.name }} de la maquina {{ nombre_maquina }} es mayor a 3 dias y se eliminara."
+  when: resultado_script.stdout == "ELIMINAR"
+
+- name: Mostrar resultado en caso de conserver. 
+  debug:
+    msg: "El snapshot {{ snapshots.name }} de la maquina {{ nombre_maquina }} es menor a 3 dias y se debe conservar."
+  when: resultado_script.stdout == "CONSERVAR"

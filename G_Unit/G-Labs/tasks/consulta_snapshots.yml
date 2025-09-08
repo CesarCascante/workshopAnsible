@@ -8,3 +8,10 @@
     datacenter: "{{ datacenter_name }}"
     name: "{{ nombre_maquina }}"
   register: info_vm
+
+- name: Ciclo de snapshot para validar fecha y eliminarlo.
+  include_tasks: 
+    file: tasks/elimina_snapshot.yml
+  loop: "{{ info_vm.instance.snapshots }}"
+  loop_control:
+    loop_var: snapshots
