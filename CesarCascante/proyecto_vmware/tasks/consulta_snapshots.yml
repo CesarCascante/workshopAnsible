@@ -1,0 +1,10 @@
+- name: Definir nombre de la maquina virtual.
+  set_fact:
+    nombre_maquin: "{{ vm_name.guest_name }}"
+
+- name: Consulta inforamcion completa de la maquina virtual.
+  community.vmware.vmware_guest_info:
+    hostname: "{{ vcenter_hostname }}"
+    datacenter: "{{ datacenter_name }}"
+    name: "{{ nombre_maquin }}"
+  register: info_vm

@@ -6,7 +6,16 @@
     - vars/main.yml
   tasks:
 
-    - name: Gather all registered virtual machines
+    - name: Obtener las maquinas virtuales del vcenter.
       community.vmware.vmware_vm_info:
         hostname: '{{ vcenter_hostname }}'
       register: vm_info
+
+    - name: Recorrido para obtener informacion de snaphots.
+      include_tasks:
+        file: tasks/consulta_snapshots.yml
+      loop: "{{ vm_info.virtual_machines }}"
+      loop_control:
+        loop_var: vm_name
+
+    
