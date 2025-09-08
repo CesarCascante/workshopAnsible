@@ -1,7 +1,7 @@
 ---
 - name: Playbook para eliminar snapshots mayores a 3 dias.
   hosts: localhost
-  gather_facts: false
+  gather_facts: true
   vars_files:
     - vars/main.yml
   tasks:
