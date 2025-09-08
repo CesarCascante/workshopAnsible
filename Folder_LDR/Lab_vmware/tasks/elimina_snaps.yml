@@ -4,7 +4,7 @@
 
 - name: Crear archivo script de fecha en localhost.
   template:
-    src: templates/comparar_fechas_file.sh.j2
+    src: templates/comparar_fecha_file.sh.j2
     dest: /tmp/comparar_fechas.sh
     mode: '0755'
 
