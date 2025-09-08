@@ -2,12 +2,11 @@
 - name: Housekeeping snapshopts mayores a 3 días
   hosts: localhost
   gather_facts: false
-  vars: 
-    - vcenter_hostname: vcenter.gbmcoelab.com
-    - vmware_data: SabanaLab
+  vars_files:
+    - vars/main.yml
 
-  tasks: 
-    - name: Uso de modulo de vmware
+  tasks:
+    - name: Obtener las maquinas virtuales del vcenter.
       community.vmware.vmware_vm_info:
         hostname: '{{ vcenter_hostname }}'
       register: vm_info
