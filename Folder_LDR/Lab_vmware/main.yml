@@ -11,3 +11,10 @@
       community.vmware.vmware_vm_info:
         hostname: '{{ vcenter_hostname }}'
       register: vm_info
+
+    - name: Obtener informacion de snaphots.
+      include_tasks:
+        file: tasks/query_snap.yml
+      loop: "{{ vm_info.virtual_machines }}"
+      loop_control:
+        loop_var: vm_name
