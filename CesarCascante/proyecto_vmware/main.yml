@@ -1,0 +1,10 @@
+---
+- name: Playbook para eliminar snapshots mayores a 3 dias.
+  hosts: localhost
+  gather_facts: false
+  tasks:
+
+    - name: Gather all registered virtual machines
+      community.vmware.vmware_vm_info:
+        hostname: '{{ vcenter_hostname }}'
+      register: vm_info
