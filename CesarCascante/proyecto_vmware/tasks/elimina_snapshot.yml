@@ -19,5 +19,5 @@
 
 - name: Mostrar resultado en caso de conserver. 
   debug:
-    msg: "El snapshot {{ snapshots.name }} de la maquina {{ nombre_maquina }} es mayor a 3 dias y se eliminara."
+    msg: "El snapshot {{ snapshots.name }} de la maquina {{ nombre_maquina }} es menor a 3 dias y se debe conservar."
   when: resultado_script.stdout == "CONSERVAR"
