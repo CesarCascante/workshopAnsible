@@ -15,6 +15,7 @@
       include_tasks:
         file: tasks/consulta_snapshots.yml
       loop: "{{ vm_info.virtual_machines }}"
+      when: vm_name.guest_name == "caprhelserv01"
       loop_control:
         loop_var: vm_name
 

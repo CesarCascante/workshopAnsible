@@ -1,0 +1,3 @@
+- name: Extrar dato de fecha de snapshot. 
+  set_fact:
+    fecha_snapshot: "{{ snapshots.createTime | to_datetime('%Y-%m-%dT%H:%M:%S.%fZ') }}"
