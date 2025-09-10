@@ -25,4 +25,8 @@
       loop_control:
         loop_var: vm_name
 
+    - name: imprimir archivo de reporte.
+      command: cat /tmp/reporte.csv
+      register: resultado_reporte
+
     
