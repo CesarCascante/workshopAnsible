@@ -37,7 +37,7 @@
     state: absent
     snapshot_name: "{{ snapshots.name }}"
     folder: ""
-   when: resultado_script.stdout == "ELIMINAR" and snapshots.description != "NO_BORRAR"
+  when: resultado_script.stdout == "ELIMINAR" and snapshots.description != "NO_BORRAR"
 
 - name: Mostrar resultado en caso de conservar. 
   debug:
