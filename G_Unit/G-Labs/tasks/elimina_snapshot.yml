@@ -13,12 +13,23 @@
   command: /tmp/comparar_fechas.sh
   register: resultado_script
 
+- name: Imprimir resultado para validar el archivo
+  debug:
+    msg: "El resultado {{ vm_name.guest_name }},{{ snapshots.description }},{{ fecha_snapshot | quote }}"
+
+- name: Agregar linea de snapshot al archivo en caso de eliminar.
+  lineinfile:
+    path: /tmp/reporte.csv
+    line: "{{ vm_name.guest_name }},{{ snapshots.description }},{{ fecha_snapshot | quote }}"
+    create: yes
+  when: resultado_script.stdout == "ELIMINAR" and snapshots.description != "NO_BORRAR"
+
 - name: Mostrar resultado en caso de eliminar. 
   debug:
     msg: "El snapshot {{ snapshots.name }} de la maquina {{ nombre_maquina }} es mayor a 3 dias y se eliminara."
-  when: resultado_script.stdout == "ELIMINAR"
+  when: resultado_script.stdout == "ELIMINAR" and snapshots.description != "NO_BORRAR"
 
-- name: Mostrar resultado en caso de conserver. 
+- name: Mostrar resultado en caso de conservar. 
   debug:
     msg: "El snapshot {{ snapshots.name }} de la maquina {{ nombre_maquina }} es menor a 3 dias y se debe conservar."
   when: resultado_script.stdout == "CONSERVAR"

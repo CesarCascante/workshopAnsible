@@ -11,7 +11,7 @@
 
 - name: Ciclo de snapshot para validar fecha y eliminarlo.
   include_tasks: 
-    file: tasks/elimina_snapshot.yml
+    file: tasks/elimina_snapshots.yml
   loop: "{{ info_vm.instance.snapshots }}"
   loop_control:
     loop_var: snapshots
