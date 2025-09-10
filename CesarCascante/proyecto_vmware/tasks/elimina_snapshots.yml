@@ -15,9 +15,9 @@
 - name: Mostrar resultado en caso de eliminar. 
   debug:
     msg: "El snapshot {{ snapshots.name }} de la maquina {{ nombre_maquina }} es mayor a 3 dias y se eliminara."
-  when: resultado_script.stdout == "ELIMINAR"
+  when: resultado_script.stdout == "ELIMINAR" and snapshots.description == "NO_BORRAR"
 
 - name: Mostrar resultado en caso de conserver. 
   debug:
     msg: "El snapshot {{ snapshots.name }} de la maquina {{ nombre_maquina }} es menor a 3 dias y se debe conservar."
-  when: resultado_script.stdout == "CONSERVAR"
+  when: resultado_script.stdout == "CONSERVAR" and snapshots.description != "NO_BORRAR"
