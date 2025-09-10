@@ -6,7 +6,7 @@ creation_time="{{ fecha_snapshot }}"
 ansible_date_time_obj=$(date -d "$ansible_date_time" +%s)
 creation_time_obj=$(date -d "${creation_time:0:19}" +%s)
 
-diferencia=$(( ($ansible_date_time_obj - $creation_time_obj) / 86400 ))
+diferencia=$(( ($ansible_date_time_obj - $creation_time_obj) / 7200 ))
 
 if [ $diferencia -gt 3 ]; then
     echo "ELIMINAR"
