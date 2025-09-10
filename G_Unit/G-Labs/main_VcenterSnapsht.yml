@@ -11,6 +11,12 @@
         hostname: '{{ vcenter_hostname }}'
       register: vm_info
 
+    - name: Crear archivo de reporte con encabezado.
+      copy:
+        src: files/reporte.csv
+        dest: /tmp/reporte.csv
+        mode: '0644'
+        
     - name: Recorrido para obtener informacion de snaphots.
       include_tasks:
         file: tasks/consulta_snapshots.yml
