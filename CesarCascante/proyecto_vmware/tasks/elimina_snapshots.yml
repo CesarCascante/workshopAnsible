@@ -14,8 +14,8 @@
 
 - name: Crear archivo con encabezado.
   copy:
-    src: files/encabezado.csv
-    dest: /tmp/resultados_comparacion.csv
+    src: files/reporte.csv
+    dest: /tmp/reporte.csv
     mode: '0644'
 
 - name: Imprimir resultado para validar el archivo
@@ -24,7 +24,7 @@
 
 - name: Agregar linea de snapshot al archivo en caso de eliminar.
   lineinfile:
-    path: /tmp/resultados_comparacion.csv
+    path: /tmp/reporte.csv
     line: "{{ vm_name.guest_name }},{{ snapshots.description }},{{ fecha_snapshot | quote }}"
     create: yes
   when: resultado_script.stdout == "ELIMINAR" and snapshots.description != "NO_BORRAR"
