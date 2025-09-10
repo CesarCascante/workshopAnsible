@@ -24,5 +24,9 @@
       when: vm_name.guest_name is defined and vm_name.guest_name is search("rhel")
       loop_control:
         loop_var: vm_name
+    
+    - name: imprimir archivo de reporte.
+      command: cat /tmp/reporte.csv
+      register: resultado_reporte
 
         
