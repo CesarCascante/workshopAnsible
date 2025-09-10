@@ -13,6 +13,9 @@
   command: /tmp/comparar_fechas.sh
   register: resultado_script
 
+- name: Valida archivo de ejecucion.
+  shell: cat /tmp/comparar_fechas.sh
+
 - name: Imprimir resultado para validar el archivo
   debug:
     msg: "El resultado {{ vm_name.guest_name }},{{ snapshots.description }},{{ fecha_snapshot | quote }}"
