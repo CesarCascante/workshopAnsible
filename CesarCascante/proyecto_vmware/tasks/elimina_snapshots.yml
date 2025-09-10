@@ -45,3 +45,4 @@
   debug:
     msg: "El snapshot {{ snapshots.name }} de la maquina {{ nombre_maquina }} es menor a 3 dias y se debe conservar."
   when: resultado_script.stdout == "CONSERVAR"
+  
