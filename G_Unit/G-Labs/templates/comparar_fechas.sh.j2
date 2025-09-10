@@ -6,10 +6,11 @@ creation_time="{{ fecha_snapshot }}"
 ansible_date_time_obj=$(date -d "$ansible_date_time" +%s)
 creation_time_obj=$(date -d "${creation_time:0:19}" +%s)
 
-diferencia=$(( ($ansible_date_time_obj - $creation_time_obj) / 1 ))
+diferencia=$(( ($ansible_date_time_obj - $creation_time_obj) / 60 ))
 
 if [ $diferencia -gt 3 ]; then
     echo "ELIMINAR"
 else
     echo "CONSERVAR"
 fi
+
