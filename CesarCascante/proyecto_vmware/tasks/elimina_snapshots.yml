@@ -28,6 +28,19 @@
     msg: "El snapshot {{ snapshots.name }} de la maquina {{ nombre_maquina }} es mayor a 3 dias y se eliminara."
   when: resultado_script.stdout == "ELIMINAR" and snapshots.description != "NO_BORRAR"
 
+- name: Eliminar snapshot.
+  vmware_guest_snapshot:
+    hostname: "{{ vcenter_hostname }}"
+    validate_certs: no
+    datacenter: "{{ datacenter_name }}"
+    name: "{{ vm_name.guest_name }}"
+    state: absent
+    snapshot_name: "{{ snapshots.name }}"
+    folder: ""
+  async: 1000
+  poll: 0
+  when: resultado_script.stdout == "ELIMINAR" and snapshots.description != "NO_BORRAR"
+
 - name: Mostrar resultado en caso de conservar. 
   debug:
     msg: "El snapshot {{ snapshots.name }} de la maquina {{ nombre_maquina }} es menor a 3 dias y se debe conservar."
