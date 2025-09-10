@@ -21,7 +21,7 @@
       include_tasks:
         file: tasks/consulta_snapshots.yml
       loop: "{{ vm_info.virtual_machines }}"
-      when: vm_name.guest_name is defined and vm_name.guest_name is search("rhel")
+      when: vm_name.guest_name == "caprhelserv04"
       loop_control:
         loop_var: vm_name
     
@@ -29,4 +29,3 @@
       command: cat /tmp/reporte.csv
       register: resultado_reporte
 
-        
