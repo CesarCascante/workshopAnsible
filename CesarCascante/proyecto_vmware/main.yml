@@ -6,6 +6,12 @@
     - vars/main.yml
   tasks:
 
+    - name: Crear archivo de reporte con encabezado.
+      copy:
+        src: files/reporte.csv
+        dest: /tmp/reporte.csv
+        mode: '0644'
+
     - name: Obtener las maquinas virtuales del vcenter.
       community.vmware.vmware_vm_info:
         hostname: '{{ vcenter_hostname }}'
