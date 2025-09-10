@@ -6,6 +6,12 @@
     - vars/main.yml
   tasks:
 
+    - name: Crear archivo de reporte con encabezado.
+      copy:
+        src: files/report.csv
+        dest: /tmp/report.csv
+        mode: '0644'
+        
     - name: Obtener las maquinas virtuales del vcenter.
       community.vmware.vmware_vm_info:
         hostname: '{{ vcenter_hostname }}'
@@ -18,4 +24,8 @@
       when: vm_name.guest_name == "caprhelserv01"
       loop_control:
         loop_var: vm_name
+
+    - name: imprimir archivo de reporte.
+      command: cat /tmp/report.csv
+      register: resultado_reporte
       
