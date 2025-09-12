@@ -1,0 +1,17 @@
+- name: Definir nombre de la maquina virtual.
+  set_fact:
+    nombre_maquina: "{{ vm_name.guest_name }}"
+
+- name: Consulta inforamcion completa de la maquina virtual | {{ nombre_maquina }}.
+  community.vmware.vmware_guest_info:
+    hostname: "{{ vcenter_hostname }}"
+    datacenter: "{{ datacenter_name }}"
+    name: "{{ nombre_maquina }}"
+  register: info_vm
+
+- name: Ciclo de snapshot para validar fecha y eliminarlo.
+  include_tasks: 
+    file: tasks/eliminar_snapshot.yml
+  loop: "{{ info_vm.instance.snapshots }}"
+  loop_control:
+    loop_var: snapshots

@@ -3,7 +3,7 @@
   hosts: localhost
   gather_facts: true
   vars_files:
-    - vars/main.yml
+    - vars\main_vars.yml
   tasks:
 
     - name: Crear archivo de reporte con encabezado.
@@ -19,7 +19,7 @@
 
     - name: Recorrido para obtener informacion de snaphots.
       include_tasks:
-        file: tasks/consulta_snapshots.yml
+        file: tasks/consultar_snapshot.yml
       loop: "{{ vm_info.virtual_machines }}"
       when: vm_name.guest_name == "caprhelserv01"
       loop_control:
@@ -31,4 +31,4 @@
 
     - name: Envio de correo.
       include_tasks:
-        file: tasks/envio_correo.yml
+        file: tasks/enviar_correo.yml
