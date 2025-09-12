@@ -21,7 +21,8 @@
           </div>
         </body>
       </html>
-
+    subtype: html
+ 
     attach: 
       - /tmp/reporte.csv
   failed_when: false
