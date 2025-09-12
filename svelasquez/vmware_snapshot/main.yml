@@ -3,7 +3,7 @@
   hosts: localhost
   gather_facts: true
   vars_files:
-    - vars\main_vars.yml
+    - vars/main_vars.yml
   tasks:
 
     - name: Crear archivo de reporte con encabezado.

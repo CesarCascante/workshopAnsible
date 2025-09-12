@@ -9,15 +9,15 @@
     subject: "Reporte de snapshots eliminados en la fecha {{ ansible_date_time.date }}"
     body: |
       <html>
-        <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
-          <div style="background-image: url('https://example.com/ti-background.jpg'); background-size: cover; padding: 30px; border-radius: 10px; color: white;">
-             <h2>📊 Reporte de Snapshots Eliminados</h2>
-             <p>Estimado cliente,</p>
-             <p>Le compartimos el <strong>reporte actualizado</strong> de snapshots eliminados correspondiente a la fecha <strong>{{ ansible_date_time.date }}</strong>.</p>
-             <p>Este informe le permitirá tener visibilidad sobre los cambios recientes en su infraestructura, facilitando la gestión y el seguimiento de sus recursos.</p>
-             <p>📎 <strong>Adjunto encontrará el archivo detallado</strong> con la información relevante.</p>
-             <p>Si tiene alguna consulta o requiere asistencia adicional, no dude en contactarnos.</p>
-             <p>Saludos cordiales,<br>Equipo de Infraestructura TI</p>
+        <body style="font-family: Arial, sans-serif; background-color: #121212; padding: 20px; color: white;">
+          <div style="background-color: #1e1e1e; padding: 30px; border-radius: 10px; color: white;">
+            <h2>📊 Reporte de Snapshots Eliminados</h2>
+            <p>Estimado cliente,</p>
+            <p>Le compartimos el <strong>reporte actualizado</strong> de snapshots eliminados correspondiente a la fecha <strong>{{ ansible_date_time.date }}</strong>.</p>
+            <p>Este informe le permitirá tener visibilidad sobre los cambios recientes en su infraestructura, facilitando la gestión y el seguimiento de sus recursos.</p>
+            <p>📎 <strong>Adjunto encontrará el archivo detallado</strong> con la información relevante.</p>
+            <p>Si tiene alguna consulta o requiere asistencia adicional, no dude en contactarnos.</p>
+            <p>Saludos cordiales,<br>Equipo de Infraestructura TI</p>
           </div>
         </body>
       </html>
