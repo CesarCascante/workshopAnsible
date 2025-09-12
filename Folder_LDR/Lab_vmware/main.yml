@@ -1,5 +1,5 @@
 ---
-- name: Housekeeping snapshopts mayores a 2 horas
+- name: Housekeeping snapshopts mayores a 3 días
   hosts: localhost
   gather_facts: true
   vars_files:
@@ -29,3 +29,6 @@
       command: cat /tmp/report.csv
       register: resultado_reporte
       
+    - name: Envio de correo.
+      include_tasks:
+        file: tasks/send_mail.yml

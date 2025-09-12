@@ -1,0 +1,17 @@
+- name: envio de correo.
+  mail:
+    host: "{{ mail_server }}"
+    port: "{{ port_server }}"
+    username: "{{ user_mailserver | default(omit) }}"
+    password: "{{ passwd_mailserver | default(omit) }}"
+    to: "{{ mail_to }}"
+    from: "{{ mail_from }}"
+    subject: "Reporte de snapshots eliminados en la fecha {{ ansible_date_time.date }}"
+    body: |
+      Estimado usuario:
+      Se adjunta el archivo con los snapshots eliminados a la fecha.
+      Saludos.
+    attach: 
+      - /tmp/report.csv
+  failed_when: false
+  run_once: true
