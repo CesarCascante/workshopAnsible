@@ -1,5 +1,5 @@
 ---
-- name: Housekeeping snapshopts mayores a 2 horas
+- name: Housekeeping snapshopts mayores a 3 días
   hosts: localhost
   gather_facts: true
   vars_files:
