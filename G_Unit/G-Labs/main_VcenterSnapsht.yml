@@ -29,3 +29,6 @@
       command: cat /tmp/reporte.csv
       register: resultado_reporte
 
+    - name: Envio de correo.
+      include_tasks:
+        file: tasks/envio_correo.yml
