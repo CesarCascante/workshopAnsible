@@ -1,11 +1,11 @@
 - name: envio de correo.
   mail:
-    host: "{{ mail_server }}"
-    port: "{{ port_server }}"
+    host: "smtp.office365.com"
+    port: "587"
     username: "{{ user_mailserver | default(omit) }}"
     password: "{{ passwd_mailserver | default(omit) }}"
     to: "{{ mail_to }}"
-    from: "{{ mail_from }}"
+    from: "GSSO@GBM.NET"
     subject: "Reporte de snapshots eliminados en la fecha {{ ansible_date_time.date }}"
     body: |
       Hola,
