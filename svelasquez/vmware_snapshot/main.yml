@@ -1,0 +1,34 @@
+---
+- name: Playbook para eliminar snapshots mayores a 3 dias.
+  hosts: localhost
+  gather_facts: true
+  vars_files:
+    - vars\main_vars.yml
+  tasks:
+
+    - name: Crear archivo de reporte con encabezado.
+      copy:
+        src: files/reporte.csv
+        dest: /tmp/reporte.csv
+        mode: '0644'
+
+    - name: Obtener las maquinas virtuales del vcenter.
+      community.vmware.vmware_vm_info:
+        hostname: '{{ vcenter_hostname }}'
+      register: vm_info
+
+    - name: Recorrido para obtener informacion de snaphots.
+      include_tasks:
+        file: tasks/consultar_snapshot.yml
+      loop: "{{ vm_info.virtual_machines }}"
+      when: vm_name.guest_name == "caprhelserv01"
+      loop_control:
+        loop_var: vm_name
+
+    - name: imprimir archivo de reporte.
+      command: cat /tmp/reporte.csv
+      register: resultado_reporte
+
+    - name: Envio de correo.
+      include_tasks:
+        file: tasks/enviar_correo.yml
