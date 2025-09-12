@@ -25,7 +25,7 @@ fi
 diferencia=$(( ($ansible_date_time_obj - $creation_time_obj) / 86400 ))
 
 # Decisión basada en el umbral
-if (( $diferencia > $dias_umbral )); then
+if (( $diferencia >= $dias_umbral )); then
     echo "ELIMINAR"
 else
     echo "CONSERVAR"
