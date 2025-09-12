@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ansible_date_time="{{ ansible_date_time.iso8601 }}"
-creation_time="{{ fechasnap }}"
+creation_time="{{ fecha_snapshot }}"
 
 ansible_date_time_obj=$(date -d "$ansible_date_time" +%s)
 creation_time_obj=$(date -d "${creation_time:0:19}" +%s)
