@@ -1,16 +1,32 @@
 #!/bin/bash
 
+# Variables de entrada
 ansible_date_time="{{ ansible_date_time.iso8601 }}"
 creation_time="{{ fecha_snapshot }}"
+dias_umbral="{{ dias_borrar }}"
 
-ansible_date_time_obj=$(date -d "$ansible_date_time" +%s)
-creation_time_obj=$(date -d "${creation_time:0:19}" +%s)
+# Validación de variables
+if [[ -z "$ansible_date_time" || -z "$creation_time" ]]; then
+    echo "Error: Las fechas no están definidas correctamente."
+    exit 1
+fi
 
-diferencia=$(( ($ansible_date_time_obj - $creation_time_obj) / 86400 ))
+# Conversión de fechas a formato epoch
+ansible_date_time_obj=$(date -d "$ansible_date_time" +%s 2>/dev/null)
+creation_time_obj=$(date -d "${creation_time:0:19}" +%s 2>/dev/null)
 
-if [ $diferencia -gt 3 ]; then
+# Validación de conversión
+if [[ -z "$ansible_date_time_obj" || -z "$creation_time_obj" ]]; then
+    echo "Error: No se pudo convertir las fechas."
+    exit 1
+fi
+
+# Cálculo de diferencia en días
+diferencia=$(( (ansible_date_time_obj - creation_time_obj) / 86400 ))
+
+# Decisión basada en el umbral
+if (( diferencia > dias_umbral )); then
     echo "ELIMINAR"
 else
     echo "CONSERVAR"
 fi
-
